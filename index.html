@@ -1,28 +1,86 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mergy</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Poyraz Bariskan Games</title>
     <meta
       name="description"
-      content="Mergy is a calm number-merging puzzle game for quick, focused play sessions."
-    />
-    <link rel="stylesheet" href="./styles.css" />
+      content="Official pages for Cold File and MergeBeat, two games by Poyraz Bariskan."
+    >
+    <meta property="og:title" content="Poyraz Bariskan Games">
+    <meta
+      property="og:description"
+      content="Choose a game to find gameplay details, support, and privacy information."
+    >
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
-    <main class="shell">
+    <header class="site-header" aria-label="Main navigation">
+      <a class="brand" href="./" aria-label="Poyraz Bariskan Games home">Poyraz Bariskan Games</a>
+      <nav class="site-nav">
+        <a href="./ColdFile/">Cold File</a>
+        <a href="./MergeBeat/">MergeBeat</a>
+      </nav>
+    </header>
+
+    <main>
       <section class="hero">
-        <p class="eyebrow">Mergy</p>
-        <h1>Merge matching numbers.</h1>
-        <p class="lead">
-          Drop tiles, chain merges, and keep the board alive while the numbers climb higher.
-        </p>
-        <div class="actions" aria-label="Mergy links">
-          <a class="button" href="./support.html">Support</a>
-          <a class="button secondary" href="./privacy.html">Privacy Policy</a>
+        <div class="hero-copy">
+          <p class="eyebrow">Official Game Sites</p>
+          <h1>Choose your next run.</h1>
+          <p class="lead">
+            Find gameplay details, player support, and privacy information for Cold File and
+            MergeBeat.
+          </p>
         </div>
       </section>
+
+      <section class="game-grid" aria-label="Published games">
+        <article class="game-card coldfile-card">
+          <a class="game-media" href="./ColdFile/" aria-label="Open Cold File site">
+            <img src="./ColdFile/assets/enter-dungeon.webp" alt="Cold File dungeon combat screen." decoding="async">
+          </a>
+          <div class="game-copy">
+            <p class="eyebrow">Dark Fantasy Idle RPG</p>
+            <h2>Cold File</h2>
+            <p>
+              Descend into dangerous runs, gather spoils, train your hero, and build permanent
+              power between attempts.
+            </p>
+            <div class="actions" aria-label="Cold File links">
+              <a class="button primary" href="./ColdFile/">Open Site</a>
+              <a class="button secondary" href="./ColdFile/support.html">Support</a>
+              <a class="button secondary" href="./ColdFile/privacy.html">Privacy</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="game-card mergebeat-card">
+          <a class="game-media" href="./MergeBeat/" aria-label="Open MergeBeat site">
+            <img src="./MergeBeat/assets/mergebeat-board.svg" alt="MergeBeat number tile board." decoding="async">
+          </a>
+          <div class="game-copy">
+            <p class="eyebrow">Number-Merging Puzzle</p>
+            <h2>MergeBeat</h2>
+            <p>
+              Drop tiles, chain matching numbers, and keep the board alive through quick,
+              focused puzzle sessions.
+            </p>
+            <div class="actions" aria-label="MergeBeat links">
+              <a class="button primary" href="./MergeBeat/">Open Site</a>
+              <a class="button secondary" href="./MergeBeat/support.html">Support</a>
+              <a class="button secondary" href="./MergeBeat/privacy.html">Privacy</a>
+            </div>
+          </div>
+        </article>
+      </section>
     </main>
+
+    <footer class="site-footer">
+      <span>2026 Poyraz Bariskan</span>
+      <a href="mailto:poyraz@bariskan.com">poyraz@bariskan.com</a>
+    </footer>
   </body>
 </html>
