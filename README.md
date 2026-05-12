@@ -1,6 +1,7 @@
-# Mergy Support Site
+# Poyraz Bariskan Games
 
-Public GitHub Pages site for Mergy support and privacy policy pages.
+Public GitHub Pages hub for Poyraz Bariskan's games.
 
-- Support: https://pbariskan.github.io/support.html
-- Privacy Policy: https://pbariskan.github.io/privacy.html
+- Hub: https://pbariskan.github.io/
+- Cold File: https://pbariskan.github.io/ColdFile/
+- MergeBeat: https://pbariskan.github.io/MergeBeat/
