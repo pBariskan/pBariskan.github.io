@@ -63,28 +63,36 @@
         margin-bottom: 52px;
       }
 
-      .profile-photo {
+      .photo-wrap {
         flex-shrink: 0;
         width: 200px;
         height: 200px;
         border-radius: 50%;
-        object-fit: cover;
-        object-position: center 15%;
-        image-orientation: from-image;
+        overflow: hidden;
         border: 2px solid var(--line);
         box-shadow: 0 0 0 7px rgba(40,196,160,0.09), 0 20px 50px rgba(0,0,0,0.5);
         transition: box-shadow 0.4s;
       }
 
-      .profile-photo:hover {
+      .photo-wrap:hover {
         box-shadow: 0 0 0 10px rgba(40,196,160,0.16), 0 20px 50px rgba(0,0,0,0.5);
+      }
+
+      .profile-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 25%;
+        image-orientation: from-image;
+        transform: scale(1.8);
+        transform-origin: 50% 25%;
       }
 
       .bio { flex: 1; min-width: 0; margin-bottom: 0; }
 
       @media (max-width: 640px) {
         .bio-row { flex-direction: column; align-items: flex-start; gap: 22px; }
-        .profile-photo { width: 120px; height: 120px; }
+        .photo-wrap { width: 130px; height: 130px; }
       }
 
       /* ── Divider ── */
@@ -331,12 +339,14 @@
         </h1>
 
         <div class="bio-row">
-          <img
-            class="profile-photo"
-            src="./assets/profile.jpeg"
-            alt="Poyraz Bariskan"
-            decoding="async"
-          >
+          <div class="photo-wrap">
+            <img
+              class="profile-photo"
+              src="./assets/profile.jpeg"
+              alt="Poyraz Bariskan"
+              decoding="async"
+            >
+          </div>
           <p class="bio">
             I've been passionate about coding since middle school — a curiosity that became a career path after a
             <strong>year-long internship at a game studio</strong> confirmed what I already suspected.
