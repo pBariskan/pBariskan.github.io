@@ -3,75 +3,71 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Poyraz Bariskan Games</title>
-    <meta
-      name="description"
-      content="Official pages for Cold File and MergeBeat, two games by Poyraz Bariskan."
-    >
-    <meta property="og:title" content="Poyraz Bariskan Games">
-    <meta
-      property="og:description"
-      content="Choose a game to find gameplay details, support, and privacy information."
-    >
+    <title>Poyraz Bariskan — Game Developer</title>
+    <meta name="description" content="Official game sites for Cold File and MergeBeat by Poyraz Bariskan.">
+    <meta property="og:title" content="Poyraz Bariskan — Game Developer">
+    <meta property="og:description" content="Two games. Two worlds. Cold File and MergeBeat.">
     <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
-    <header class="site-header" aria-label="Main navigation">
-      <a class="brand" href="./" aria-label="Poyraz Bariskan Games home">Poyraz Bariskan Games</a>
-      <nav class="site-nav">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Poyraz Bariskan home">PB</a>
+      <nav class="site-nav" aria-label="Main navigation">
         <a href="./ColdFile/">Cold File</a>
         <a href="./MergeBeat/">MergeBeat</a>
       </nav>
     </header>
 
     <main>
-      <section class="hero">
-        <div class="hero-copy">
-          <p class="eyebrow">Official Game Sites</p>
-          <h1>Choose your next run.</h1>
-          <p class="lead">
-            Find gameplay details, player support, and privacy information for Cold File and
-            MergeBeat.
-          </p>
+      <section class="hero" aria-label="Introduction">
+        <div class="hero-backdrop" aria-hidden="true">
+          <span class="backdrop-text">GAMES</span>
+        </div>
+        <div class="hero-content">
+          <p class="hero-tag">Game Developer &middot; Istanbul</p>
+          <h1 class="hero-title">
+            Poyraz<br>
+            <span class="title-gradient">Bariskan</span>
+          </h1>
+          <p class="hero-sub">Dark dungeons. Falling tiles.<br>Two games, two obsessions.</p>
         </div>
       </section>
 
       <section class="game-grid" aria-label="Published games">
         <article class="game-card coldfile-card">
-          <a class="game-media" href="./ColdFile/" aria-label="Open Cold File site">
-            <img src="./ColdFile/assets/enter-dungeon.webp" alt="Cold File dungeon combat screen." decoding="async">
+          <div class="card-glow" aria-hidden="true"></div>
+          <a class="card-visual" href="./ColdFile/" tabindex="-1" aria-hidden="true">
+            <img src="./ColdFile/assets/enter-dungeon.webp" alt="Cold File dungeon combat screen" decoding="async">
           </a>
-          <div class="game-copy">
-            <p class="eyebrow">Dark Fantasy Idle RPG</p>
-            <h2>Cold File</h2>
-            <p>
-              Descend into dangerous runs, gather spoils, train your hero, and build permanent
-              power between attempts.
-            </p>
-            <div class="actions" aria-label="Cold File links">
-              <a class="button primary" href="./ColdFile/">Open Site</a>
-              <a class="button secondary" href="./ColdFile/support.html">Support</a>
-              <a class="button secondary" href="./ColdFile/privacy.html">Privacy</a>
+          <div class="card-body">
+            <p class="card-genre">Dark Fantasy Idle RPG</p>
+            <h2 class="card-title"><a href="./ColdFile/">Cold File</a></h2>
+            <p class="card-desc">Descend into dangerous runs, gather spoils, train your hero, and build permanent power between attempts.</p>
+            <div class="card-actions">
+              <a class="btn btn-cold" href="./ColdFile/">Open Site</a>
+              <a class="btn btn-ghost" href="./ColdFile/support.html">Support</a>
+              <a class="btn btn-ghost" href="./ColdFile/privacy.html">Privacy</a>
             </div>
           </div>
         </article>
 
         <article class="game-card mergebeat-card">
-          <a class="game-media" href="./MergeBeat/" aria-label="Open MergeBeat site">
-            <img src="./MergeBeat/assets/mergebeat-board.svg" alt="MergeBeat number tile board." decoding="async">
+          <div class="card-glow" aria-hidden="true"></div>
+          <a class="card-visual card-visual--contain" href="./MergeBeat/" tabindex="-1" aria-hidden="true">
+            <img src="./MergeBeat/assets/mergebeat-board.svg" alt="MergeBeat number tile board" decoding="async">
           </a>
-          <div class="game-copy">
-            <p class="eyebrow">Number-Merging Puzzle</p>
-            <h2>MergeBeat</h2>
-            <p>
-              Drop tiles, chain matching numbers, and keep the board alive through quick,
-              focused puzzle sessions.
-            </p>
-            <div class="actions" aria-label="MergeBeat links">
-              <a class="button primary" href="./MergeBeat/">Open Site</a>
-              <a class="button secondary" href="./MergeBeat/support.html">Support</a>
-              <a class="button secondary" href="./MergeBeat/privacy.html">Privacy</a>
+          <div class="card-body">
+            <p class="card-genre">Number-Merging Puzzle</p>
+            <h2 class="card-title"><a href="./MergeBeat/">MergeBeat</a></h2>
+            <p class="card-desc">Drop tiles, chain matching numbers, and keep the board alive through quick, focused puzzle sessions.</p>
+            <div class="card-actions">
+              <a class="btn btn-merge" href="./MergeBeat/">Open Site</a>
+              <a class="btn btn-ghost" href="./MergeBeat/support.html">Support</a>
+              <a class="btn btn-ghost" href="./MergeBeat/privacy.html">Privacy</a>
             </div>
           </div>
         </article>
@@ -79,7 +75,7 @@
     </main>
 
     <footer class="site-footer">
-      <span>2026 Poyraz Bariskan</span>
+      <span>&copy; 2026 Poyraz Bariskan</span>
       <a href="mailto:poyraz@bariskan.com">poyraz@bariskan.com</a>
     </footer>
   </body>
