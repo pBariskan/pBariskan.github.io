@@ -56,36 +56,36 @@
       .bio strong { color: var(--text); font-weight: 600; }
 
       /* ── Photo intro layout ── */
-      .intro-row {
+      .intro-header {
         display: flex;
         align-items: flex-start;
-        gap: 40px;
-        margin-bottom: 52px;
+        gap: 36px;
+        margin-bottom: 36px;
       }
+
+      .intro-heading-block { flex: 1; min-width: 0; }
 
       .profile-photo {
         flex-shrink: 0;
-        width: 160px;
-        height: 160px;
+        width: 190px;
+        height: 190px;
         border-radius: 50%;
         object-fit: cover;
-        object-position: center top;
+        object-position: center 20%;
         image-orientation: from-image;
         border: 2px solid var(--line);
         box-shadow: 0 0 0 6px rgba(40,196,160,0.08), 0 20px 50px rgba(0,0,0,0.5);
         transition: box-shadow 0.4s;
+        margin-top: 6px;
       }
 
       .profile-photo:hover {
-        box-shadow: 0 0 0 8px rgba(40,196,160,0.15), 0 20px 50px rgba(0,0,0,0.5);
+        box-shadow: 0 0 0 10px rgba(40,196,160,0.14), 0 20px 50px rgba(0,0,0,0.5);
       }
 
-      .intro-text { flex: 1; min-width: 0; }
-
-      @media (max-width: 580px) {
-        .intro-row { flex-direction: column; align-items: center; gap: 24px; }
-        .profile-photo { width: 130px; height: 130px; }
-        .intro-text { width: 100%; }
+      @media (max-width: 640px) {
+        .intro-header { flex-direction: column-reverse; align-items: flex-start; gap: 20px; }
+        .profile-photo { width: 110px; height: 110px; }
       }
 
       /* ── Divider ── */
@@ -325,28 +325,29 @@
     <main>
       <div class="page-wrap">
         <!-- ── Intro ─────────────────────────── -->
-        <p class="page-eyebrow">About Me</p>
-        <h1 class="page-title">
-          Builder by passion,<br>
-          <span class="grad">developer by choice.</span>
-        </h1>
-
-        <div class="intro-row">
+        <div class="intro-header">
+          <div class="intro-heading-block">
+            <p class="page-eyebrow">About Me</p>
+            <h1 class="page-title">
+              Builder by passion,<br>
+              <span class="grad">developer by choice.</span>
+            </h1>
+          </div>
           <img
             class="profile-photo"
             src="./assets/profile.jpeg"
             alt="Poyraz Bariskan"
             decoding="async"
           >
-          <p class="bio intro-text">
-            I've been passionate about coding since middle school — a curiosity that became a career path after a
-            <strong>year-long internship at a game studio</strong> confirmed what I already suspected.
-            Now I'm studying <strong>Computer Science & Artificial Intelligence</strong> at IE University in Madrid,
-            building games, tools, and AI-powered products along the way.
-            My biggest drive is <strong>Artificial Intelligence</strong>: I want to help shape the future it's creating
-            and support people in staying resilient through that transformation.
-          </p>
         </div>
+        <p class="bio">
+          I've been passionate about coding since middle school — a curiosity that became a career path after a
+          <strong>year-long internship at a game studio</strong> confirmed what I already suspected.
+          Now I'm studying <strong>Computer Science & Artificial Intelligence</strong> at IE University in Madrid,
+          building games, tools, and AI-powered products along the way.
+          My biggest drive is <strong>Artificial Intelligence</strong>: I want to help shape the future it's creating
+          and support people in staying resilient through that transformation.
+        </p>
 
         <hr class="rule">
 
