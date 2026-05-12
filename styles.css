@@ -429,6 +429,44 @@ a   { color: inherit; }
   text-underline-offset: 3px;
 }
 
+
+.btn-appstore {
+  background: #1c1c1e;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.12);
+  gap: 7px;
+}
+.btn-appstore:hover {
+  background: #2c2c2e;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+  border-color: rgba(255,255,255,0.22);
+}
+
+.btn-soon-wrap { position: relative; display: inline-flex; }
+.btn-soon-tip {
+  position: absolute;
+  bottom: calc(100% + 9px);
+  left: 50%;
+  transform: translateX(-50%) translateY(5px);
+  white-space: nowrap;
+  background: rgba(40,196,160,0.12);
+  border: 1px solid rgba(40,196,160,0.35);
+  color: var(--merge);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 13px;
+  border-radius: 100px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.22s, transform 0.22s;
+}
+.btn-soon-wrap.tip-show .btn-soon-tip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 820px) {
   .site-header {
