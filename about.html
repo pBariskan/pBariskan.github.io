@@ -29,7 +29,7 @@
 
       .page-title {
         font-family: var(--display);
-        font-size: clamp(2.8rem, 8vw, 5.8rem);
+        font-size: clamp(2rem, 8vw, 5.8rem);
         font-weight: 900;
         line-height: 0.88;
         letter-spacing: -0.03em;
@@ -312,7 +312,14 @@
       }
 
       @media (max-width: 580px) {
-        .page-wrap { padding-top: 36px; }
+        .page-wrap { padding-top: 36px; padding-bottom: 60px; }
+        .bio { font-size: 1rem; line-height: 1.7; }
+      }
+
+      @media (max-width: 420px) {
+        .courses-grid { grid-template-columns: 1fr; }
+        .tl-role { font-size: 0.95rem; }
+        .pill { font-size: 0.78rem; padding: 5px 11px; }
       }
     </style>
   </head>
