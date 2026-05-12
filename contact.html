@@ -54,9 +54,21 @@
       /* ── Contact grid ── */
       .contact-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
         gap: 14px;
         animation: fadeUp 0.6s 0.2s cubic-bezier(0.16,1,0.3,1) both;
+      }
+
+      .contact-card:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+        max-width: calc(50% - 7px);
+        margin-inline: auto;
+      }
+
+      @media (max-width: 640px) {
+        .contact-card:last-child:nth-child(odd) {
+          max-width: 100%;
+        }
       }
 
       .contact-card {
@@ -94,6 +106,10 @@
         border-color: rgba(225,48,108,0.4);
         box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 40px rgba(225,48,108,0.1);
       }
+      .contact-card.c-linkedin:hover {
+        border-color: rgba(10,102,194,0.45);
+        box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 40px rgba(10,102,194,0.12);
+      }
 
       /* Icon box */
       .c-icon {
@@ -112,11 +128,13 @@
       .c-github   .c-icon { background: rgba(255,255,255,0.06); }
       .c-twitter  .c-icon { background: rgba(29,155,240,0.1); }
       .c-instagram .c-icon { background: rgba(225,48,108,0.1); }
+      .c-linkedin  .c-icon { background: rgba(10,102,194,0.1); }
 
       .c-email:hover    .c-icon { background: rgba(207,160,60,0.18); }
       .c-github:hover   .c-icon { background: rgba(255,255,255,0.1); }
       .c-twitter:hover  .c-icon { background: rgba(29,155,240,0.18); }
       .c-instagram:hover .c-icon { background: rgba(225,48,108,0.18); }
+      .c-linkedin:hover  .c-icon { background: rgba(10,102,194,0.18); }
 
       /* Text */
       .c-text { flex: 1; min-width: 0; }
