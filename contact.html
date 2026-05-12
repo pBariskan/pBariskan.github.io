@@ -28,7 +28,7 @@
 
       .page-title {
         font-family: var(--display);
-        font-size: clamp(2.8rem, 8vw, 5.8rem);
+        font-size: clamp(2rem, 8vw, 5.8rem);
         font-weight: 900;
         line-height: 0.88;
         letter-spacing: -0.03em;
@@ -66,7 +66,9 @@
       }
 
       @media (max-width: 640px) {
+        .contact-grid { grid-template-columns: 1fr; }
         .contact-card:last-child:nth-child(odd) {
+          grid-column: auto;
           max-width: 100%;
         }
       }
@@ -171,6 +173,7 @@
 
       @media (max-width: 580px) {
         .contact-wrap { padding-top: 36px; }
+        .page-sub { font-size: 0.95rem; margin-bottom: 36px; }
       }
     </style>
   </head>
