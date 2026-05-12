@@ -70,6 +70,7 @@ a   { color: inherit; }
 .site-nav {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .site-nav a {
@@ -148,7 +149,7 @@ a   { color: inherit; }
 
 .hero-title {
   font-family: var(--display);
-  font-size: clamp(3.6rem, 9.5vw, 8rem);
+  font-size: clamp(2.2rem, 9.5vw, 8rem);
   font-weight: 900;
   line-height: 0.88;
   letter-spacing: -0.035em;
@@ -442,7 +443,6 @@ a   { color: inherit; }
 
 @media (max-width: 520px) {
   .site-nav { width: 100%; }
-  .site-nav a { flex: 1; text-align: center; }
 
   .backdrop-text { display: none; }
 
@@ -452,4 +452,9 @@ a   { color: inherit; }
   .btn { width: 100%; text-align: center; }
 
   .site-footer { flex-direction: column; }
+}
+
+@media (max-width: 400px) {
+  .site-nav a { font-size: 0.75rem; padding: 7px 12px; }
+  .hero-sub { font-size: 1rem; }
 }
