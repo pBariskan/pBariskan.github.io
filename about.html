@@ -7,355 +7,37 @@
     <meta name="description" content="About Poyraz Bariskan — CS & AI student, game developer, and builder.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
-    <style>
-      .page-wrap {
-        width: min(820px, calc(100% - 40px));
-        margin-inline: auto;
-        padding: 60px 0 100px;
-      }
-
-      /* ── Header block ── */
-      .page-eyebrow {
-        font-size: 0.68rem;
-        font-weight: 700;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--merge);
-        margin-bottom: 14px;
-        animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both;
-      }
-
-      .page-title {
-        font-family: var(--display);
-        font-size: 4.8rem;
-        font-weight: 900;
-        line-height: 0.88;
-        letter-spacing: 0;
-        margin-bottom: 36px;
-        animation: fadeUp 0.6s 0.08s cubic-bezier(0.16,1,0.3,1) both;
-      }
-
-      .page-title .grad {
-        display: block;
-        background: linear-gradient(100deg, var(--cold) 0%, var(--merge) 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      /* ── Bio ── */
-      .bio {
-        font-size: 1.1rem;
-        color: var(--muted);
-        line-height: 1.8;
-        animation: fadeUp 0.6s 0.14s cubic-bezier(0.16,1,0.3,1) both;
-      }
-
-      .bio strong { color: var(--text); font-weight: 600; }
-
-      /* ── Photo + bio row ── */
-      .bio-row {
-        display: flex;
-        align-items: flex-start;
-        gap: 32px;
-        margin-bottom: 52px;
-      }
-
-      .photo-wrap {
-        flex-shrink: 0;
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        overflow: hidden;
-        border: 2px solid var(--line);
-        box-shadow: 0 0 0 7px rgba(40,196,160,0.1), 0 20px 50px rgba(28,38,50,0.14);
-        transition: box-shadow 0.4s;
-      }
-
-      .photo-wrap:hover {
-        box-shadow: 0 0 0 10px rgba(40,196,160,0.16), 0 20px 50px rgba(28,38,50,0.16);
-      }
-
-      .profile-photo {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center top;
-      }
-
-      .bio { flex: 1; min-width: 0; margin-bottom: 0; }
-
-      @media (max-width: 640px) {
-        .bio-row { flex-direction: column; align-items: flex-start; gap: 22px; }
-        .photo-wrap { width: 130px; height: 130px; }
-      }
-
-      /* ── Divider ── */
-      hr.rule {
-        border: none;
-        border-top: 1px solid var(--line);
-        margin: 0 0 44px;
-      }
-
-      /* ── Skills ── */
-      .skills-block {
-        margin-bottom: 44px;
-        animation: fadeUp 0.6s 0.2s cubic-bezier(0.16,1,0.3,1) both;
-      }
-
-      .block-label {
-        font-size: 0.68rem;
-        font-weight: 700;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin-bottom: 14px;
-      }
-
-      .skill-row { margin-bottom: 18px; }
-
-      .skill-cat {
-        font-size: 0.7rem;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: rgba(122,138,158,0.6);
-        margin-bottom: 8px;
-      }
-
-      .pills { display: flex; flex-wrap: wrap; gap: 8px; }
-
-      .pill {
-        font-size: 0.82rem;
-        font-weight: 600;
-        padding: 6px 14px;
-        border-radius: 100px;
-        border: 1px solid var(--line);
-        background: rgba(255,255,255,0.72);
-        color: var(--text);
-      }
-
-      .pill-cold   { border-color: rgba(207,160,60,0.3);  color: var(--cold); }
-      .pill-merge  { border-color: rgba(40,196,160,0.3);  color: var(--merge); }
-      .pill-blue   { border-color: rgba(245,164,0,0.3); color: var(--viesly); }
-
-      /* ── Expand button ── */
-      .expand-btn {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        width: 100%;
-        padding: 20px 24px;
-        background: rgba(255,255,255,0.78);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        color: var(--text);
-        font-family: var(--body);
-        font-size: 0.95rem;
-        font-weight: 600;
-        cursor: pointer;
-        text-align: left;
-        transition: background 0.2s, border-color 0.2s;
-        animation: fadeUp 0.6s 0.26s cubic-bezier(0.16,1,0.3,1) both;
-      }
-
-      .expand-btn:hover {
-        background: #ffffff;
-        border-color: rgba(40,196,160,0.28);
-      }
-
-      .expand-label { flex: 1; }
-
-      .expand-sub {
-        display: block;
-        font-size: 0.78rem;
-        font-weight: 400;
-        color: var(--muted);
-        margin-top: 2px;
-      }
-
-      .chevron {
-        width: 28px;
-        height: 28px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background: rgba(23,27,32,0.06);
-        flex-shrink: 0;
-        transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), background 0.2s;
-        font-size: 0.9rem;
-      }
-
-      .expand-btn[aria-expanded="true"] .chevron {
-        transform: rotate(180deg);
-        background: rgba(40,196,160,0.15);
-      }
-
-      /* ── Collapsible detail ── */
-      .detail-panel {
-        overflow: hidden;
-        max-height: 0;
-        transition: max-height 0.65s cubic-bezier(0.16,1,0.3,1);
-      }
-
-      .detail-panel.open { max-height: 4000px; }
-
-      .detail-inner { padding-top: 40px; }
-
-      /* ── Timeline ── */
-      .tl-section { margin-bottom: 44px; }
-
-      .tl-heading {
-        font-size: 0.68rem;
-        font-weight: 700;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--muted);
-        padding-bottom: 14px;
-        border-bottom: 1px solid var(--line);
-        margin-bottom: 28px;
-      }
-
-      .tl-item {
-        position: relative;
-        padding-left: 22px;
-        margin-bottom: 32px;
-      }
-
-      .tl-item:last-child { margin-bottom: 0; }
-
-      .tl-item::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 8px;
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: var(--merge);
-      }
-
-      .tl-item.dot-cold::before { background: var(--cold); }
-
-      .tl-date {
-        font-size: 0.7rem;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin-bottom: 3px;
-      }
-
-      .tl-role {
-        font-family: var(--display);
-        font-size: 1.05rem;
-        font-weight: 700;
-        letter-spacing: 0;
-        margin-bottom: 3px;
-      }
-
-      .tl-org {
-        font-size: 0.85rem;
-        color: var(--muted);
-        margin-bottom: 12px;
-      }
-
-      .tl-bullets {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 7px;
-      }
-
-      .tl-bullets li {
-        font-size: 0.9rem;
-        color: var(--muted);
-        line-height: 1.6;
-        padding-left: 16px;
-        position: relative;
-      }
-
-      .tl-bullets li::before {
-        content: '–';
-        position: absolute;
-        left: 0;
-        color: rgba(122,138,158,0.4);
-      }
-
-      /* ── Courses grid ── */
-      .courses-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 10px;
-      }
-
-      .course-card {
-        background: rgba(255,255,255,0.78);
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        padding: 12px 16px;
-        font-size: 0.85rem;
-        color: var(--text);
-        font-weight: 500;
-      }
-
-      .course-card time {
-        display: block;
-        font-size: 0.7rem;
-        color: var(--muted);
-        margin-top: 3px;
-      }
-
-      @media (max-width: 580px) {
-        .page-wrap { padding-top: 36px; padding-bottom: 60px; }
-        .page-title { font-size: 3rem; }
-        .bio { font-size: 1rem; line-height: 1.7; }
-      }
-
-      @media (max-width: 420px) {
-        .courses-grid { grid-template-columns: 1fr; }
-        .tl-role { font-size: 0.95rem; }
-        .pill { font-size: 0.78rem; padding: 5px 11px; }
-      }
-    </style>
   </head>
-  <body>
+  <body class="accent-portfolio">
     <header class="site-header">
-      <a class="brand" href="./">PB</a>
+      <a class="brand" href="./" aria-label="Poyraz Bariskan home">
+        <span class="brand-mark">PB</span>
+        <span>Bariskan</span>
+      </a>
       <nav class="site-nav" aria-label="Main navigation">
-        <a href="./">Projects</a>
+        <a href="./">Work</a>
         <a href="./about.html" aria-current="page">About</a>
         <a href="./contact.html">Contact</a>
       </nav>
     </header>
 
     <main>
-      <div class="page-wrap">
-        <!-- ── Intro ─────────────────────────── -->
-        <p class="page-eyebrow">About Me</p>
-        <h1 class="page-title">
-          Builder by passion,<br>
-          <span class="grad">developer by choice.</span>
-        </h1>
+      <div class="page">
+        <div class="page-head">
+          <p class="eyebrow page-eyebrow">About Me</p>
+          <h1 class="page-title">Builder by passion,<br><span class="accent">developer by choice.</span></h1>
+        </div>
 
         <div class="bio-row">
-          <div class="photo-wrap">
-            <img
-              class="profile-photo"
-              src="./assets/profile.jpeg"
-              alt="Poyraz Bariskan"
-              decoding="async"
-            >
+          <div class="portrait">
+            <img src="./assets/profile.jpeg" alt="Poyraz Bariskan" decoding="async">
           </div>
           <p class="bio">
             I've been passionate about coding since middle school — a curiosity that became a career path after a
             <strong>year-long internship at a game studio</strong> confirmed what I already suspected.
-            Now I'm studying <strong>Computer Science & Artificial Intelligence</strong> at IE University in Madrid,
+            Now I'm studying <strong>Computer Science &amp; Artificial Intelligence</strong> at IE University in Madrid,
             building games, tools, and AI-powered products along the way.
             My biggest drive is <strong>Artificial Intelligence</strong>: I want to help shape the future it's creating
             and support people in staying resilient through that transformation.
@@ -364,73 +46,64 @@
 
         <hr class="rule">
 
-        <!-- ── Skills ──────────────────────── -->
         <div class="skills-block">
           <p class="block-label">Skills &amp; Tools</p>
 
           <div class="skill-row">
             <p class="skill-cat">Languages</p>
-            <div class="pills">
-              <span class="pill pill-cold">Python</span>
-              <span class="pill pill-cold">C#</span>
-              <span class="pill pill-cold">Java</span>
-              <span class="pill pill-cold">C++</span>
-              <span class="pill pill-cold">TypeScript</span>
+            <div class="chips">
+              <span class="chip">Python</span>
+              <span class="chip">C#</span>
+              <span class="chip">Java</span>
+              <span class="chip">C++</span>
+              <span class="chip">TypeScript</span>
             </div>
           </div>
 
           <div class="skill-row">
             <p class="skill-cat">Tools &amp; Platforms</p>
-            <div class="pills">
-              <span class="pill pill-merge">Unity Engine</span>
-              <span class="pill pill-merge">Claude Code</span>
-              <span class="pill pill-merge">ComfyUI</span>
-              <span class="pill pill-merge">GitHub</span>
-              <span class="pill pill-merge">VS Code</span>
-              <span class="pill pill-merge">Stable Diffusion</span>
+            <div class="chips">
+              <span class="chip">Unity Engine</span>
+              <span class="chip">Claude Code</span>
+              <span class="chip">ComfyUI</span>
+              <span class="chip">GitHub</span>
+              <span class="chip">VS Code</span>
+              <span class="chip">Stable Diffusion</span>
             </div>
           </div>
 
           <div class="skill-row">
             <p class="skill-cat">Concepts</p>
-            <div class="pills">
-              <span class="pill pill-blue">Artificial Intelligence</span>
-              <span class="pill pill-blue">Object-Oriented Programming</span>
-              <span class="pill pill-blue">Blockchain</span>
-              <span class="pill pill-blue">Algorithms &amp; Data Structures</span>
+            <div class="chips">
+              <span class="chip">Artificial Intelligence</span>
+              <span class="chip">Object-Oriented Programming</span>
+              <span class="chip">Blockchain</span>
+              <span class="chip">Algorithms &amp; Data Structures</span>
             </div>
           </div>
 
           <div class="skill-row">
             <p class="skill-cat">Human Languages</p>
-            <div class="pills">
-              <span class="pill">Turkish — Native</span>
-              <span class="pill">English — Advanced</span>
+            <div class="chips">
+              <span class="chip">Turkish — Native</span>
+              <span class="chip">English — Advanced</span>
             </div>
           </div>
         </div>
 
         <hr class="rule">
 
-        <!-- ── Expand toggle ──────────────── -->
-        <button
-          class="expand-btn"
-          aria-expanded="false"
-          aria-controls="detail-panel"
-          onclick="togglePanel(this)"
-        >
-          <span class="expand-label">
+        <button class="disclosure" aria-expanded="false" aria-controls="detail-panel" onclick="togglePanel(this)">
+          <span class="d-label">
             Full profile
-            <span class="expand-sub">Education · Experience · Extracurriculars · Courses</span>
+            <span class="d-sub">Education · Experience · Extracurriculars · Courses</span>
           </span>
-          <span class="chevron" aria-hidden="true">↓</span>
+          <span class="chev" aria-hidden="true">↓</span>
         </button>
 
-        <!-- ── Detail panel ───────────────── -->
         <div class="detail-panel" id="detail-panel">
           <div class="detail-inner">
 
-            <!-- Education -->
             <div class="tl-section">
               <p class="tl-heading">Education</p>
 
@@ -446,18 +119,17 @@
                 </ul>
               </div>
 
-              <div class="tl-item dot-cold">
+              <div class="tl-item">
                 <p class="tl-date">Graduated June 2025</p>
                 <p class="tl-role">Dore High School</p>
                 <p class="tl-org">Turkish Diploma · Average Score: 95 · Istanbul, Turkey</p>
               </div>
             </div>
 
-            <!-- Experience -->
             <div class="tl-section">
               <p class="tl-heading">Experience</p>
 
-              <div class="tl-item dot-cold">
+              <div class="tl-item">
                 <p class="tl-date">Jul 2022 — Jul 2023</p>
                 <p class="tl-role">Game Developer Intern</p>
                 <p class="tl-org">Blockville Digital Assets · Istanbul, Turkey</p>
@@ -471,7 +143,6 @@
               </div>
             </div>
 
-            <!-- Extracurriculars -->
             <div class="tl-section">
               <p class="tl-heading">Extracurricular Activities</p>
 
@@ -486,7 +157,6 @@
               </div>
             </div>
 
-            <!-- Courses -->
             <div class="tl-section">
               <p class="tl-heading">Courses &amp; Certifications</p>
               <div class="courses-grid">
@@ -501,14 +171,17 @@
 
           </div>
         </div>
-        <!-- /detail-panel -->
 
       </div>
     </main>
 
     <footer class="site-footer">
-      <span>&copy; 2026 Poyraz Bariskan</span>
-      <a href="mailto:poyraz@bariskan.com">poyraz@bariskan.com</a>
+      <span>© 2026 Poyraz Bariskan</span>
+      <div class="foot-soc">
+        <a href="mailto:poyraz@bariskan.com">Email</a>
+        <a href="https://github.com/pBariskan" target="_blank" rel="noopener">GitHub</a>
+        <a href="./contact.html">Contact</a>
+      </div>
     </footer>
 
     <script>

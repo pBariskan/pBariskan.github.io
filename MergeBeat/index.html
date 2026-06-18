@@ -17,16 +17,16 @@
     <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
   </head>
-  <body>
-    <header class="site-header" aria-label="Main navigation">
+  <body class="accent-merge">
+    <header class="site-header">
       <a class="brand" href="./" aria-label="MergeBeat home">
         <span class="brand-mark">MB</span>
         <span>MergeBeat</span>
       </a>
-      <nav class="site-nav">
+      <nav class="site-nav" aria-label="Main navigation">
         <a href="../">Games</a>
         <a href="#game">Game</a>
         <a href="./support.html">Support</a>
@@ -35,39 +35,42 @@
     </header>
 
     <main>
-      <section class="hero">
-        <div class="hero-copy">
+      <section class="g-hero split">
+        <div class="g-hero-inner">
           <p class="eyebrow">Number-Merging Puzzle</p>
           <h1>Merge matching numbers.</h1>
-          <p class="lead">
+          <p class="lede">
             Drop tiles, chain merges, and keep the board alive while the numbers climb higher.
           </p>
-          <div class="actions" aria-label="MergeBeat links">
-            <a class="button primary" href="./support.html">Support</a>
-            <a class="button secondary" href="./privacy.html">Privacy Policy</a>
+          <div class="actions">
+            <a class="btn btn-solid" href="./support.html">Support</a>
+            <a class="btn" href="./privacy.html">Privacy Policy</a>
           </div>
         </div>
-        <div class="hero-art" aria-label="MergeBeat gameplay art">
+        <div class="g-hero-art" aria-label="MergeBeat gameplay art">
           <img src="./assets/mergebeat-board.svg" alt="A MergeBeat puzzle board with number tiles." decoding="async">
         </div>
       </section>
 
-      <section class="feature-strip" id="game" aria-label="MergeBeat game features">
-        <article>
-          <strong>Drop</strong>
-          <span>Place each new tile with care.</span>
+      <section class="feature-band" id="game" aria-label="MergeBeat game features">
+        <article class="feature-card">
+          <span class="feature-mark">01</span>
+          <h3>Drop</h3>
+          <p>Place each new tile with care.</p>
         </article>
-        <article>
-          <strong>Merge</strong>
-          <span>Match equal numbers to clear space.</span>
+        <article class="feature-card">
+          <span class="feature-mark">02</span>
+          <h3>Merge</h3>
+          <p>Match equal numbers to clear space.</p>
         </article>
-        <article>
-          <strong>Chain</strong>
-          <span>Build reactions for bigger scores.</span>
+        <article class="feature-card">
+          <span class="feature-mark">03</span>
+          <h3>Chain</h3>
+          <p>Build reactions for bigger scores.</p>
         </article>
       </section>
 
-      <section class="support-callout">
+      <section class="callout">
         <div>
           <p class="eyebrow">Player Support</p>
           <h2>Need help with MergeBeat?</h2>
@@ -77,14 +80,14 @@
           </p>
         </div>
         <div class="actions">
-          <a class="button primary" href="./support.html">Open Support</a>
-          <a class="button secondary" href="./privacy.html">Read Privacy</a>
+          <a class="btn" href="./support.html">Open Support</a>
+          <a class="btn btn-ghost" href="./privacy.html">Read Privacy</a>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <span>2026 Poyraz Bariskan</span>
+      <span>© 2026 Poyraz Bariskan</span>
       <a href="mailto:poyraz@bariskan.com">poyraz@bariskan.com</a>
     </footer>
   </body>

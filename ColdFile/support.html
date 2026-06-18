@@ -13,16 +13,16 @@
     <link rel="apple-touch-icon" href="./assets/icon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
   </head>
-  <body class="document-page">
-    <header class="site-header" aria-label="Main navigation">
+  <body class="accent-cold">
+    <header class="site-header">
       <a class="brand" href="./" aria-label="Cold File home">
         <img src="./assets/icon-192.png" width="42" height="42" alt="">
         <span>Cold File</span>
       </a>
-      <nav class="site-nav">
+      <nav class="site-nav" aria-label="Main navigation">
         <a href="../">Games</a>
         <a href="./#game">Game</a>
         <a href="./support.html" aria-current="page">Support</a>
@@ -30,77 +30,65 @@
       </nav>
     </header>
 
-    <main class="document-shell">
-      <section class="document-hero">
-        <div>
-          <p class="eyebrow">Player Support</p>
-          <h1>Support</h1>
-          <p class="lede">
-            Need help with a bug, save issue, device problem, or gameplay question? Send the details below.
-          </p>
+    <main>
+      <div class="doc">
+        <div class="doc-head">
+          <div class="dh-copy">
+            <p class="eyebrow">Player Support</p>
+            <h1>Support</h1>
+            <p class="lede">
+              Need help with a bug, save issue, device problem, or gameplay question? Send the details below.
+            </p>
+          </div>
+          <div class="doc-art"><img src="./assets/spoils.webp" alt="" decoding="async"></div>
         </div>
-        <img class="document-art" src="./assets/spoils.webp" alt="" decoding="async">
-      </section>
 
-      <section class="document-grid">
-        <article class="document-panel">
-          <h2>Contact</h2>
-          <p>
-            Email support at
-            <a class="text-link" href="mailto:poyraz@bariskan.com">poyraz@bariskan.com</a>.
-          </p>
+        <div class="doc-grid">
+          <article class="prose">
+            <h2>Contact</h2>
+            <p>
+              Email support at
+              <a class="text-link" href="mailto:poyraz@bariskan.com">poyraz@bariskan.com</a>.
+            </p>
 
-          <a class="mail-panel" href="mailto:poyraz@bariskan.com?subject=Cold%20File%20Support">
-            <span>Email Support</span>
-            <strong>poyraz@bariskan.com</strong>
-          </a>
+            <a class="mail-panel" href="mailto:poyraz@bariskan.com?subject=Cold%20File%20Support">
+              <span>Email Support</span>
+              <strong>poyraz@bariskan.com</strong>
+            </a>
 
-          <h2>Helpful Details</h2>
-          <p>
-            When reporting an issue, please include:
-          </p>
-          <ul class="check-list">
-            <li>Your device model</li>
-            <li>Your iOS version</li>
-            <li>The app version, if visible</li>
-            <li>A short description of what happened</li>
-            <li>Any screenshot that helps explain the issue</li>
-          </ul>
+            <h2>Helpful Details</h2>
+            <p>When reporting an issue, please include:</p>
+            <ul class="check-list">
+              <li>Your device model</li>
+              <li>Your iOS version</li>
+              <li>The app version, if visible</li>
+              <li>A short description of what happened</li>
+              <li>Any screenshot that helps explain the issue</li>
+            </ul>
 
-          <h2>Privacy</h2>
-          <p>
-            Read the Cold File privacy policy here:
-            <a class="text-link" href="./privacy.html">Privacy Policy</a>.
-          </p>
-        </article>
+            <h2>Privacy</h2>
+            <p>
+              Read the Cold File privacy policy here:
+              <a class="text-link" href="./privacy.html">Privacy Policy</a>.
+            </p>
+          </article>
 
-        <aside class="side-panel" aria-label="Support summary">
-          <p class="eyebrow">Quick Info</p>
-          <dl>
-            <div>
-              <dt>Platform</dt>
-              <dd>iPhone</dd>
-            </div>
-            <div>
-              <dt>Version</dt>
-              <dd>1.0.0</dd>
-            </div>
-            <div>
-              <dt>Accounts</dt>
-              <dd>No login required</dd>
-            </div>
-            <div>
-              <dt>Save Data</dt>
-              <dd>Stored locally on device</dd>
-            </div>
-          </dl>
-          <a class="button ghost full" href="./">Back To Home</a>
-        </aside>
-      </section>
+          <aside class="doc-aside" aria-label="Support summary">
+            <p class="block-label">Quick Info</p>
+            <dl class="info-dl">
+              <div><dt>Platform</dt><dd>iPhone</dd></div>
+              <div><dt>Version</dt><dd>1.0.0</dd></div>
+              <div><dt>Accounts</dt><dd>No login</dd></div>
+              <div><dt>Save Data</dt><dd>On device</dd></div>
+            </dl>
+            <a class="btn btn-full" href="./">Back To Home</a>
+          </aside>
+        </div>
+      </div>
     </main>
 
     <footer class="site-footer">
-      <span>2026 Poyraz Bariskan</span>
+      <span>© 2026 Poyraz Bariskan</span>
       <a href="mailto:poyraz@bariskan.com">poyraz@bariskan.com</a>
     </footer>
   </body>
