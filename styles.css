@@ -8,7 +8,7 @@
   --line:       rgba(255, 255, 255, 0.07);
   --cold:       #cfa03c;
   --merge:      #28c4a0;
-  --biasly:     #6e8eff;
+  --viesly:     #f5a400;
   --ink:        #05060a;
   --shadow:     0 40px 100px rgba(0, 0, 0, 0.7);
   --display:    'Unbounded', sans-serif;
@@ -209,8 +209,8 @@ a   { color: inherit; }
 .mergebeat-card:hover {
   box-shadow: var(--shadow), 0 0 70px rgba(40, 196, 160, 0.12);
 }
-.biasly-card:hover {
-  box-shadow: var(--shadow), 0 0 70px rgba(110, 142, 255, 0.14);
+.viesly-card:hover {
+  box-shadow: var(--shadow), 0 0 70px rgba(245, 164, 0, 0.16);
 }
 
 /* atmospheric top glow per card */
@@ -228,13 +228,13 @@ a   { color: inherit; }
 .mergebeat-card .card-glow {
   background: radial-gradient(ellipse 85% 50% at 50% -15%, rgba(40, 196, 160, 0.18) 0%, transparent 70%);
 }
-.biasly-card .card-glow {
-  background: radial-gradient(ellipse 85% 50% at 50% -15%, rgba(110, 142, 255, 0.18) 0%, transparent 70%);
+.viesly-card .card-glow {
+  background: radial-gradient(ellipse 85% 50% at 50% -15%, rgba(245, 164, 0, 0.18) 0%, transparent 70%);
 }
 
 .coldfile-card:hover  .card-glow,
 .mergebeat-card:hover .card-glow,
-.biasly-card:hover    .card-glow { opacity: 1.5; }
+.viesly-card:hover    .card-glow { opacity: 1.5; }
 
 /* image area */
 .card-visual {
@@ -279,7 +279,7 @@ a   { color: inherit; }
 
 .coldfile-card  .card-genre { color: var(--cold); }
 .mergebeat-card .card-genre { color: var(--merge); }
-.biasly-card    .card-genre { color: var(--biasly); }
+.viesly-card    .card-genre { color: var(--viesly); }
 
 .card-title {
   font-family: var(--display);
@@ -352,11 +352,11 @@ a   { color: inherit; }
   border-color: rgba(255, 255, 255, 0.15);
 }
 
-.btn-biasly {
-  background-color: var(--biasly);
+.btn-viesly {
+  background-color: var(--viesly);
   color: var(--ink);
 }
-.btn-biasly:hover { box-shadow: 0 6px 20px rgba(110, 142, 255, 0.4); }
+.btn-viesly:hover { box-shadow: 0 6px 20px rgba(245, 164, 0, 0.4); }
 
 /* ── Footer ──────────────────────────────────────────────── */
 .site-footer {
