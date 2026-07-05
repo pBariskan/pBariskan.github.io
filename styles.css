@@ -34,6 +34,7 @@
 .accent-cold      { --accent: #c8941f; --accent-ink: #3a2802; }
 .accent-merge     { --accent: #16a883; --accent-ink: #053026; }
 .accent-viesly    { --accent: #f5a400; --accent-ink: #3a2700; }
+.accent-huewash   { --accent: #1fa89a; --accent-ink: #053028; }
 
 /* ── Reset ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; }
