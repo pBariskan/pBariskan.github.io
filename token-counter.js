@@ -86,6 +86,7 @@
       q('since').textContent = sinceText(s.since);
       var st = status(s);
       el.classList.toggle('is-live', st.live);
+      el.classList.remove('is-loading');
       q('status').textContent = st.text;
     }
 

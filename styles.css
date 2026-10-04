@@ -143,9 +143,20 @@ a   { color: inherit; }
 .site-nav a[aria-current="page"] { background: var(--accent); color: var(--accent-ink); }
 
 /* ── Hero ───────────────────────────────────────────────── */
+/* First screen: name + live counter, filling exactly one viewport (--hdr = header bottom, set inline). */
+.intro {
+  width: min(var(--maxw), 100% - var(--gut) * 2);
+  min-height: calc(100svh - var(--hdr, 110px));
+  margin: 0 auto;
+  padding-block: clamp(12px, 3vh, 40px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .hero {
   width: min(var(--maxw), 100% - var(--gut) * 2);
-  margin: clamp(36px, 7vw, 84px) auto clamp(28px, 5vw, 56px);
+  margin: clamp(32px, 6vw, 72px) auto clamp(28px, 5vw, 56px);
 }
 
 .eyebrow {
@@ -165,17 +176,17 @@ a   { color: inherit; }
   background: var(--accent);
 }
 
-.hero-eyebrow { margin-bottom: clamp(18px, 3vw, 30px); animation: rise 0.7s 0.1s cubic-bezier(0.16,1,0.3,1) both; }
+.hero-eyebrow { margin-bottom: clamp(10px, 2.2vh, 20px); animation: rise 0.7s 0.1s cubic-bezier(0.16,1,0.3,1) both; }
 
 .hero-title {
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(3.4rem, 13vw, 11rem);
-  line-height: 0.84;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.2rem, min(7.2vw, 9.5vh), 5.6rem);
+  line-height: 0.9;
+  letter-spacing: -0.035em;
   text-transform: uppercase;
 }
-.hero-title .line { display: block; animation: rise 0.8s cubic-bezier(0.16,1,0.3,1) both; }
+.hero-title .line { display: inline-block; animation: rise 0.8s cubic-bezier(0.16,1,0.3,1) both; }
 .hero-title .line:nth-child(1) { animation-delay: 0.16s; }
 .hero-title .line:nth-child(2) { animation-delay: 0.24s; }
 .hero-title .outline {
@@ -189,7 +200,6 @@ a   { color: inherit; }
   display: flex;
   flex-wrap: wrap;
   gap: 10px 14px;
-  margin-top: clamp(24px, 4vw, 40px);
   animation: rise 0.8s 0.34s cubic-bezier(0.16,1,0.3,1) both;
 }
 .hero-meta .tag {
@@ -255,14 +265,14 @@ a   { color: inherit; }
 
 /* ── Live token counter ─────────────────────────────────── */
 .burn {
-  width: min(var(--maxw), 100% - var(--gut) * 2);
-  margin: clamp(28px, 5vw, 56px) auto 0;
-  padding: clamp(20px, 3.5vw, 36px);
+  margin-top: clamp(16px, 4vh, 40px);
+  padding: clamp(16px, 4vh, 36px) clamp(16px, 3.5vw, 36px);
   border: var(--border);
   background: var(--ink);
   color: var(--paper);
   box-shadow: 8px 8px 0 var(--accent);
-  animation: rise 0.7s cubic-bezier(0.16,1,0.3,1) both;
+  container-type: inline-size;
+  animation: rise 0.8s 0.32s cubic-bezier(0.16,1,0.3,1) both;
 }
 .burn-head {
   display: flex;
@@ -287,24 +297,27 @@ a   { color: inherit; }
 .burn.is-live .burn-status { color: var(--accent); }
 .burn.is-live .burn-dot { background: var(--accent); animation: pulse 1.6s ease-in-out infinite; }
 .burn-number {
-  margin-top: clamp(12px, 2vw, 20px);
+  margin-top: clamp(8px, 2vh, 20px);
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(2rem, 10vw, 7.2rem);
+  font-size: clamp(2rem, min(10vw, 16vh), 9.5rem);
+  /* 12cqi keeps a 15-character total ("100,000,000,000") on one line inside the panel */
+  font-size: clamp(1.6rem, min(10vw, 16vh, 12cqi), 9.5rem);
   line-height: 0.95;
   letter-spacing: 0;
   font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
   color: var(--surface);
 }
+.burn.is-loading .burn-number { opacity: 0.2; }
 .burn-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, 2.2fr);
   gap: 0 16px;
-  margin-top: clamp(20px, 3vw, 30px);
+  margin-top: clamp(12px, 3vh, 30px);
   border-top: 2px solid color-mix(in srgb, var(--paper) 25%, transparent);
 }
-.burn-grid div { padding-top: 14px; }
+.burn-grid div { padding-top: clamp(8px, 1.8vh, 14px); }
 .burn-grid dt {
   font-family: var(--mono);
   font-size: 0.66rem;
@@ -322,7 +335,7 @@ a   { color: inherit; }
 }
 .burn-grid dd span { white-space: nowrap; }
 .burn-foot {
-  margin-top: 18px;
+  margin-top: clamp(10px, 2.2vh, 18px);
   font-family: var(--mono);
   font-size: 0.7rem;
   letter-spacing: 0.08em;
@@ -338,6 +351,15 @@ a   { color: inherit; }
 @media (max-width: 860px) {
   .burn-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .burn-sources { grid-column: 1 / -1; }
+}
+
+/* Phones: keep name + counter inside the first screen under the tall stacked header. */
+@media (max-width: 620px) {
+  .intro .hero-eyebrow { display: none; }
+  .burn .eyebrow { font-size: 0.68rem; letter-spacing: 0.08em; }
+  .burn-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 12px; }
+  .burn-sources { grid-column: span 2; }
+  .burn-foot { letter-spacing: 0.04em; }
 }
 
 /* ── Section heading ────────────────────────────────────── */
