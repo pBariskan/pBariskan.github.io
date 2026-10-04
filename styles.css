@@ -253,6 +253,93 @@ a   { color: inherit; }
   to   { transform: translateX(-50%); }
 }
 
+/* ── Live token counter ─────────────────────────────────── */
+.burn {
+  width: min(var(--maxw), 100% - var(--gut) * 2);
+  margin: 0 auto clamp(44px, 7vw, 88px);
+  padding: clamp(20px, 3.5vw, 36px);
+  border: var(--border);
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 8px 8px 0 var(--accent);
+  animation: rise 0.8s 0.2s cubic-bezier(0.16,1,0.3,1) both;
+}
+.burn[hidden] { display: none; }
+.burn-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 18px;
+}
+.burn .eyebrow { color: var(--paper-2); }
+.burn-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.burn-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--ink-faint); }
+.burn.is-live .burn-status { color: var(--accent); }
+.burn.is-live .burn-dot { background: var(--accent); animation: pulse 1.6s ease-in-out infinite; }
+.burn-number {
+  margin-top: clamp(12px, 2vw, 20px);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(2rem, 10vw, 7.2rem);
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+  color: var(--accent);
+}
+.burn-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.7fr);
+  gap: 0 16px;
+  margin-top: clamp(20px, 3vw, 30px);
+  border-top: 2px solid color-mix(in srgb, var(--paper) 25%, transparent);
+}
+.burn-grid div { padding-top: 14px; }
+.burn-grid dt {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.burn-grid dd {
+  margin-top: 4px;
+  font-family: var(--mono);
+  font-size: clamp(0.92rem, 2vw, 1.12rem);
+  font-weight: 700;
+  color: var(--paper);
+}
+.burn-grid dd span { white-space: nowrap; }
+.burn-foot {
+  margin-top: 18px;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent); }
+  50%      { box-shadow: 0 0 0 6px transparent; }
+}
+
+@media (max-width: 860px) {
+  .burn-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 /* ── Section heading ────────────────────────────────────── */
 .section-head {
   display: flex;

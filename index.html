@@ -55,6 +55,21 @@
         </div>
       </div>
 
+      <section class="burn" data-token-counter data-endpoint="https://claude-token-counter.poyraz-fad.workers.dev" aria-label="Live Claude token counter" hidden>
+        <div class="burn-head">
+          <p class="eyebrow">Tokens burned with Claude</p>
+          <p class="burn-status"><span class="burn-dot" aria-hidden="true"></span><span data-status>Live</span></p>
+        </div>
+        <p class="burn-number" data-total>0</p>
+        <dl class="burn-grid">
+          <div><dt>Today</dt><dd data-today>—</dd></div>
+          <div><dt>Cache read</dt><dd data-cache-read>—</dd></div>
+          <div><dt>Output</dt><dd data-output>—</dd></div>
+          <div><dt>By source</dt><dd data-sources>—</dd></div>
+        </dl>
+        <p class="burn-foot">2 accounts · cache included · since <span data-since></span></p>
+      </section>
+
       <div class="section-head">
         <h2>Selected Work</h2>
         <span class="count">[ 04 Projects ]</span>
@@ -155,5 +170,6 @@
         setTimeout(function() { wrap.classList.remove('tip-show'); }, 1800);
       }
     </script>
+    <script src="./token-counter.js" defer></script>
   </body>
 </html>
