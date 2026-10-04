@@ -1,4 +1,4 @@
-/* Live Claude token counter — polls public totals from the counter Worker and animates the number. */
+/* Live token counter (Claude + Codex) — polls public totals from the counter Worker and animates the number. */
 (function (factory) {
   var api = factory();
   if (typeof module === 'object' && module.exports) module.exports = api;
@@ -13,19 +13,28 @@
   function formatFull(n) { return full.format(Math.round(n)); }
   function formatCompact(n) { return compact.format(n); }
 
-  function status(stats) {
-    if (!stats.updatedAt) return { live: false, text: 'Waiting for data' };
-    var age = stats.now - stats.updatedAt;
-    if (age <= LIVE_MS) return { live: true, text: 'Live' };
-    var min = Math.floor(age / 60000);
-    if (min < 60) return { live: false, text: 'Updated ' + min + ' min ago' };
+  function ago(t, now) {
+    if (!t) return '—';
+    var min = Math.floor((now - t) / 60000);
+    if (min < 1) return 'just now';
+    if (min < 60) return min + ' min ago';
     var h = Math.floor(min / 60);
-    if (h < 24) return { live: false, text: 'Updated ' + h + ' h ago' };
-    return { live: false, text: 'Updated ' + Math.floor(h / 24) + ' d ago' };
+    if (h < 24) return h + ' h ago';
+    return Math.floor(h / 24) + ' d ago';
   }
 
+  function status(stats) {
+    if (!stats.updatedAt) return { live: false, text: 'Waiting for data' };
+    if (stats.now - stats.updatedAt <= LIVE_MS) return { live: true, text: 'Live' };
+    return { live: false, text: 'Updated ' + ago(stats.updatedAt, stats.now) };
+  }
+
+  var SOURCE_LABELS = [['app', 'App'], ['cli', 'CLI'], ['web', 'Web'], ['codex', 'Codex']];
+
   function sourceParts(sources) {
-    return ['App ' + formatCompact(sources.app), 'CLI ' + formatCompact(sources.cli), 'Web ' + formatCompact(sources.web)];
+    return SOURCE_LABELS
+      .filter(function (s) { return sources[s[0]] > 0; })
+      .map(function (s) { return s[1] + ' ' + formatCompact(sources[s[0]]); });
   }
 
   function sinceText(day) {
@@ -63,6 +72,7 @@
     function render(s) {
       tween(s.total.all);
       q('today').textContent = formatCompact(s.today.all);
+      q('last-burn').textContent = ago(s.lastUsageAt, s.now);
       q('cache-read').textContent = formatCompact(s.total.cache_read);
       q('output').textContent = formatCompact(s.total.output);
       var sources = q('sources');
@@ -77,7 +87,6 @@
       var st = status(s);
       el.classList.toggle('is-live', st.live);
       q('status').textContent = st.text;
-      el.hidden = false;
     }
 
     function poll() {
@@ -97,7 +106,7 @@
   }
 
   return {
-    formatFull: formatFull, formatCompact: formatCompact, status: status,
+    formatFull: formatFull, formatCompact: formatCompact, ago: ago, status: status,
     sourceParts: sourceParts, sinceText: sinceText, mount: mount,
   };
 });
