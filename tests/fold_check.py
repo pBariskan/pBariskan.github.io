@@ -32,6 +32,8 @@ SIZES = [  # viewport (width, height, must_fit)
     (1280, 650, True),
     (1024, 700, True),
     (768, 900, True),
+    (430, 740, True),    # iPhone Pro Max Safari with toolbars
+    (390, 844, True),    # iPhone 14/15 with toolbars hidden
     (390, 664, True),    # iPhone 14/15 Safari with toolbars
     (375, 548, False),   # iPhone SE with toolbars: may overflow, but nothing may be cut at the fold
 ]
@@ -41,6 +43,7 @@ STATS = {
     "today": {"input": 0, "output": 0, "cache_read": 0, "cache_write": 0, "all": 1300000000},
     "sources": {"app": 16184735686, "cli": 2182091495, "web": 0, "codex": 5921893342},
     "since": "2026-04-13", "updatedAt": 1, "lastUsageAt": 1, "lastLocalAt": 1, "lastWebAt": None, "now": 2,
+    "github": {"contributions": 3007, "updatedAt": 1},
 }
 MEASURE = """
 <script>
@@ -48,7 +51,13 @@ setTimeout(function () {
   function box(el) { if (!el) return null; var r = el.getBoundingClientRect(); return r.height ? [r.top, r.bottom] : null; }
   var intro = document.querySelector('.intro');
   var visible = [].filter.call(intro.children, function (c) { return box(c); });
-  var blocks = [intro].concat([].slice.call(document.querySelectorAll('main > *')).filter(function (el) { return el !== intro; }));
+  // the intro section's own blocks count separately: tags, intro line and GitHub card may land on either side of the fold
+  var blocks = [intro];
+  [].forEach.call(document.querySelectorAll('main > *'), function (el) {
+    if (el === intro) return;
+    if (el.classList.contains('hero')) blocks = blocks.concat([].slice.call(el.children));
+    else blocks.push(el);
+  });
   var num = document.querySelector('.burn-number');
   var pre = document.createElement('pre');
   pre.id = 'fold';
