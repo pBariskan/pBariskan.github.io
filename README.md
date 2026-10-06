@@ -1,8 +1,11 @@
-# Poyraz Bariskan Games
+# Poyraz Bariskan — Portfolio
 
-Public GitHub Pages hub for Poyraz Bariskan's games.
+Public GitHub Pages site: portfolio, projects and the game sites.
 
-- Hub: https://pbariskan.github.io/
+- Portfolio: https://pbariskan.github.io/
 - Hue Wash: https://pbariskan.github.io/HueWash/
 - Cold File: https://pbariskan.github.io/ColdFile/
 - MergeBeat: https://pbariskan.github.io/MergeBeat/
+
+Every page shares one header and footer; `site.js` drives the scroll motion.
+Check structure and helpers with `node --test`.

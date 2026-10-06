@@ -18,17 +18,24 @@
   </head>
   <body class="accent-cold">
     <header class="site-header">
-      <a class="brand" href="./" aria-label="Cold File home">
-        <img src="./assets/icon-192.png" width="42" height="42" alt="">
-        <span>Cold File</span>
+      <a class="brand" href="../" aria-label="Poyraz Bariskan home">
+        <span class="brand-mark">PB</span>
+        <span class="brand-name">Bariskan</span>
       </a>
       <nav class="site-nav" aria-label="Main navigation">
-        <a href="../">Games</a>
-        <a href="./#game">Game</a>
-        <a href="./support.html">Support</a>
-        <a href="./privacy.html" aria-current="page">Privacy</a>
+        <a href="../#work" aria-current="page">Work</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
       </nav>
+      <span class="scroll-progress" aria-hidden="true"></span>
     </header>
+
+    <nav class="sub-nav" aria-label="Cold File">
+      <a class="sub-brand" href="./"><img src="./assets/icon-192.png" width="28" height="28" alt=""><span>Cold File</span></a>
+      <a href="./#game">Game</a>
+      <a href="./support.html">Support</a>
+      <a href="./privacy.html" aria-current="page">Privacy</a>
+    </nav>
 
     <main>
       <div class="doc">
@@ -45,7 +52,7 @@
         </div>
 
         <div class="doc-grid">
-          <article class="prose">
+          <article class="prose" data-pop>
             <h2>Overview</h2>
             <p>
               Cold File is designed to be played without an account, login, advertising profile,
@@ -95,7 +102,7 @@
             </p>
           </article>
 
-          <aside class="doc-aside" aria-label="Privacy summary">
+          <aside class="doc-aside" aria-label="Privacy summary" data-pop>
             <p class="block-label">At A Glance</p>
             <ul class="status-list">
               <li>No accounts</li>
@@ -112,7 +119,12 @@
 
     <footer class="site-footer">
       <span>© 2026 Poyraz Bariskan</span>
-      <a href="mailto:poyraz@bariskan.com">poyraz@bariskan.com</a>
+      <div class="foot-soc">
+        <a href="mailto:poyraz@bariskan.com">Email</a>
+        <a href="https://github.com/pBariskan" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/poyrazb" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
     </footer>
+    <script src="../site.js" defer></script>
   </body>
 </html>

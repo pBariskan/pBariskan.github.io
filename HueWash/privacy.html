@@ -12,17 +12,24 @@
   </head>
   <body class="accent-huewash">
     <header class="site-header">
-      <a class="brand" href="./" aria-label="Hue Wash home">
-        <span class="brand-mark">HW</span>
-        <span>Hue Wash</span>
+      <a class="brand" href="../" aria-label="Poyraz Bariskan home">
+        <span class="brand-mark">PB</span>
+        <span class="brand-name">Bariskan</span>
       </a>
       <nav class="site-nav" aria-label="Main navigation">
-        <a href="../">Games</a>
-        <a href="./#game">Game</a>
-        <a href="./support.html">Support</a>
-        <a href="./privacy.html" aria-current="page">Privacy</a>
+        <a href="../#work" aria-current="page">Work</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
       </nav>
+      <span class="scroll-progress" aria-hidden="true"></span>
     </header>
+
+    <nav class="sub-nav" aria-label="Hue Wash">
+      <a class="sub-brand" href="./"><span class="brand-mark">HW</span><span>Hue Wash</span></a>
+      <a href="./#game">Game</a>
+      <a href="./support.html">Support</a>
+      <a href="./privacy.html" aria-current="page">Privacy</a>
+    </nav>
 
     <main>
       <div class="doc-simple">
@@ -30,7 +37,7 @@
           <p class="eyebrow page-eyebrow">Hue Wash Privacy Policy</p>
           <h1 class="page-title">Privacy Policy</h1>
         </div>
-        <article class="prose">
+        <article class="prose" data-pop>
           <p class="small">Last updated: July 5, 2026</p>
 
           <p>
@@ -76,7 +83,12 @@
 
     <footer class="site-footer">
       <span>© 2026 Poyraz Bariskan</span>
-      <a href="mailto:poyraz@bariskan.com">poyraz@bariskan.com</a>
+      <div class="foot-soc">
+        <a href="mailto:poyraz@bariskan.com">Email</a>
+        <a href="https://github.com/pBariskan" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/poyrazb" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
     </footer>
+    <script src="../site.js" defer></script>
   </body>
 </html>

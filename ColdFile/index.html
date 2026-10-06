@@ -24,17 +24,24 @@
   </head>
   <body class="accent-cold">
     <header class="site-header">
-      <a class="brand" href="./" aria-label="Cold File home">
-        <img src="./assets/icon-192.png" width="42" height="42" alt="">
-        <span>Cold File</span>
+      <a class="brand" href="../" aria-label="Poyraz Bariskan home">
+        <span class="brand-mark">PB</span>
+        <span class="brand-name">Bariskan</span>
       </a>
       <nav class="site-nav" aria-label="Main navigation">
-        <a href="../">Games</a>
-        <a href="#game">Game</a>
-        <a href="./support.html">Support</a>
-        <a href="./privacy.html">Privacy</a>
+        <a href="../#work" aria-current="page">Work</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
       </nav>
+      <span class="scroll-progress" aria-hidden="true"></span>
     </header>
+
+    <nav class="sub-nav" aria-label="Cold File">
+      <a class="sub-brand" href="./"><img src="./assets/icon-192.png" width="28" height="28" alt=""><span>Cold File</span></a>
+      <a href="#game">Game</a>
+      <a href="./support.html">Support</a>
+      <a href="./privacy.html">Privacy</a>
+    </nav>
 
     <main>
       <section class="g-hero">
@@ -57,7 +64,7 @@
         </div>
       </section>
 
-      <section class="pillars" aria-label="Game pillars">
+      <section class="pillars" aria-label="Game pillars" data-pop>
         <div><strong>Active Combat</strong><span>Dodge, fire, survive.</span></div>
         <div><strong>Permanent Growth</strong><span>Level, train, improve.</span></div>
         <div><strong>Dark Operations</strong><span>Side paths with risk.</span></div>
@@ -75,40 +82,40 @@
         </div>
 
         <div class="shots" aria-label="Cold File screenshots">
-          <figure class="shot tall">
+          <figure class="shot tall" data-pop>
             <img src="./assets/enter-dungeon.webp" alt="Cold File active combat screen." decoding="async">
           </figure>
-          <figure class="shot">
+          <figure class="shot" data-pop>
             <img src="./assets/operations.webp" alt="Cold File operations screen." loading="lazy" decoding="async">
           </figure>
-          <figure class="shot">
+          <figure class="shot" data-pop>
             <img src="./assets/gear.webp" alt="Cold File gear management screen." loading="lazy" decoding="async">
           </figure>
-          <figure class="shot">
+          <figure class="shot" data-pop>
             <img src="./assets/bureau.webp" alt="Cold File headquarters economy screen." loading="lazy" decoding="async">
           </figure>
         </div>
       </section>
 
       <section class="feature-band">
-        <article class="feature-card">
+        <article class="feature-card" data-pop>
           <span class="feature-mark">01</span>
           <h3>Survive Deeper Runs</h3>
           <p>Fight waves, manage skills, and push farther through dark fantasy encounters.</p>
         </article>
-        <article class="feature-card">
+        <article class="feature-card" data-pop>
           <span class="feature-mark">02</span>
           <h3>Build Your Hero</h3>
           <p>Level up, train, and make equipment choices that shape each return.</p>
         </article>
-        <article class="feature-card">
+        <article class="feature-card" data-pop>
           <span class="feature-mark">03</span>
           <h3>Collect Rare Spoils</h3>
           <p>Open chests, compare rewards, upgrade gear, or convert what no longer serves you.</p>
         </article>
       </section>
 
-      <section class="callout">
+      <section class="callout" data-pop>
         <div>
           <p class="eyebrow">Player Support</p>
           <h2>Need help before your next descent?</h2>
@@ -123,7 +130,12 @@
 
     <footer class="site-footer">
       <span>© 2026 Poyraz Bariskan</span>
-      <a href="mailto:poyraz@bariskan.com">poyraz@bariskan.com</a>
+      <div class="foot-soc">
+        <a href="mailto:poyraz@bariskan.com">Email</a>
+        <a href="https://github.com/pBariskan" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/poyrazb" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
     </footer>
+    <script src="../site.js" defer></script>
   </body>
 </html>
