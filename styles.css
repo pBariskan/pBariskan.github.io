@@ -220,10 +220,11 @@ a   { color: inherit; }
 }
 
 /* ── Hero ───────────────────────────────────────────────── */
-/* First screen: name + live counter, filling exactly one viewport (--hdr = header bottom, set inline). */
+/* First screen: name + live counter, filling exactly one viewport (--hdr = header bottom, set inline).
+   --intro-extra (also set inline) makes room for the tags, intro line and marquee when they fit whole. */
 .intro {
   width: min(var(--maxw), 100% - var(--gut) * 2);
-  min-height: calc(100svh - var(--hdr, 110px));
+  min-height: calc(100svh - var(--hdr, 110px) - var(--intro-extra, 0px));
   margin: 0 auto;
   padding-block: clamp(12px, 3vh, 40px);
   display: flex;
@@ -231,9 +232,12 @@ a   { color: inherit; }
   justify-content: center;
 }
 
+/* the tags below provide the gap once they share the first screen */
+.intro.has-extra { padding-bottom: 0; }
+
 .hero {
   width: min(var(--maxw), 100% - var(--gut) * 2);
-  margin: clamp(32px, 6vw, 72px) auto clamp(28px, 5vw, 56px);
+  margin: clamp(20px, 3.5vh, 44px) auto clamp(28px, 5vw, 56px);
 }
 
 .eyebrow {

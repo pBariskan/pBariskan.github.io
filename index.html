@@ -28,13 +28,47 @@
     </header>
     <script>
       (function () {
+        var root = document.documentElement;
         var header = document.querySelector('.site-header');
+        var intro, extras;
+        function end(el) { return el.offsetTop + el.offsetHeight; }
         function fit() {
           // the header is sticky, so measure its layout box (margin + height), never its scrolled position
           var top = parseFloat(getComputedStyle(header).marginTop) || 0;
-          document.documentElement.style.setProperty('--hdr', top + header.offsetHeight + 'px');
+          root.style.setProperty('--hdr', top + header.offsetHeight + 'px');
+          if (!intro) return;
+          // First screen = name + counter, plus the blocks after it (tags + intro line, then the marquee)
+          // when they fit whole, so a tall window isn't left half empty. Nothing is ever cut at the fold:
+          // the marquee may sit flush on it, the intro line keeps at least BREATHE px below it.
+          var BREATHE = 24;
+          root.style.setProperty('--intro-extra', '0px');
+          intro.classList.remove('has-extra');
+          var room = intro.offsetHeight;
+          intro.classList.add('has-extra');
+          intro.style.minHeight = '0px';
+          var natural = intro.offsetHeight;
+          var extra = 0;
+          for (var i = 0; i < extras.length; i++) {
+            var more = end(extras[i]) - end(intro);
+            var flush = i === extras.length - 1;
+            if (natural + more + (flush ? 0 : BREATHE) > room) break;
+            if (flush) { extra = more; continue; }
+            // share what's left: a third goes under the intro line, the rest is centred around name + counter
+            var gapToNext = extras[i + 1].offsetTop - end(extras[i]);
+            extra = more + Math.min(BREATHE + (room - natural - more - BREATHE) / 3, gapToNext - 4);
+          }
+          intro.style.minHeight = '';
+          intro.classList.toggle('has-extra', extra > 0);
+          root.style.setProperty('--intro-extra', Math.round(extra) + 'px');
         }
         fit();
+        document.addEventListener('DOMContentLoaded', function () {
+          intro = document.querySelector('.intro');
+          extras = [document.querySelector('.hero'), document.querySelector('.marquee')];
+          fit();
+          // the counter's data arrives later and can change its height
+          if (window.ResizeObserver) new ResizeObserver(fit).observe(document.querySelector('.burn'));
+        });
         addEventListener('resize', fit);
         addEventListener('load', fit);
         if (document.fonts) document.fonts.ready.then(fit);
