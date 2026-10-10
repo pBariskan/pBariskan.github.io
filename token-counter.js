@@ -1,5 +1,7 @@
 /* Live token counter (Claude + Codex) — polls public totals from the counter Worker and animates the number.
-   Also shows the GitHub contribution total the Worker relays, and a GitHub-style daily heatmap on demand. */
+   Also shows the GitHub contribution total the Worker relays, and a GitHub-style daily heatmap on demand.
+   If the Worker can't be reached it shows the snapshot a GitHub Action copies off it every 30 minutes
+   (.github/workflows/counter-snapshot.yml): Spanish ISPs block Cloudflare IPs during LaLiga matches. */
 (function (factory) {
   var api = factory();
   if (typeof module === 'object' && module.exports) module.exports = api;
@@ -7,6 +9,7 @@
 })(function () {
   var LIVE_MS = 7 * 60 * 1000;
   var POLL_MS = 15000;
+  var TIMEOUT_MS = 5000;
   var DAILY_MAX_AGE = 5 * 60 * 1000;
   var DAY_MS = 86400000;
   var MAX_WEEKS = 53;
@@ -27,8 +30,9 @@
     return Math.floor(h / 24) + ' d ago';
   }
 
-  function status(stats) {
+  function status(stats, cached) {
     if (!stats.updatedAt) return { live: false, text: 'Waiting for data' };
+    if (cached) return { live: false, text: 'Cached · ' + ago(stats.updatedAt, stats.now) };
     if (stats.now - stats.updatedAt <= LIVE_MS) return { live: true, text: 'Live' };
     return { live: false, text: 'Updated ' + ago(stats.updatedAt, stats.now) };
   }
@@ -224,9 +228,39 @@
     };
   }
 
+  // JSON from url, or a rejection after ms: a blocked connection would otherwise hang for minutes.
+  function getJSON(url, ms, cache) {
+    return new Promise(function (resolve, reject) {
+      var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+      var timer = setTimeout(function () {
+        if (ctrl) ctrl.abort();
+        reject(new Error('timeout'));
+      }, ms);
+      fetch(url, { cache: cache || 'no-store', signal: ctrl ? ctrl.signal : undefined })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(resolve, reject)
+        .then(function () { clearTimeout(timer); });
+    });
+  }
+
+  // The Worker's answer, else the snapshot's (base + path + '.json'). The snapshot is read through the HTTP cache:
+  // raw.githubusercontent.com caches for 5 minutes, so polling while blocked doesn't hammer it.
+  function load(endpoint, snapshot, path, ms) {
+    return getJSON(endpoint + path, ms).then(function (data) {
+      return { data: data, cached: false };
+    }, function (err) {
+      if (!snapshot) throw err;
+      return getJSON(snapshot + path + '.json', ms, 'default').then(function (data) {
+        return { data: data, cached: true };
+      });
+    });
+  }
+
   function mount(el) {
     if (!el || !window.fetch) return;
     var base = el.getAttribute('data-endpoint').replace(/\/$/, '');
+    var snapshot = (el.getAttribute('data-snapshot') || '').replace(/\/$/, '');
+    var live = false;
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function q(name) { return el.querySelector('[data-' + name + ']'); }
     var tween = counterTween(q('total'), reduce);
@@ -242,7 +276,8 @@
       ghTween(github.contributions);
     }
 
-    function render(s) {
+    function render(s, cached) {
+      if (cached) s.now = Date.now(); // the snapshot's own clock is up to 30 min old
       tween(s.total.all);
       q('today').textContent = formatCompact(s.today.all);
       q('last-burn').textContent = ago(s.lastUsageAt, s.now);
@@ -257,7 +292,7 @@
         sources.appendChild(span);
       });
       q('since').textContent = sinceText(s.since);
-      var st = status(s);
+      var st = status(s, cached);
       el.classList.toggle('is-live', st.live);
       el.classList.remove('is-loading');
       q('status').textContent = st.text;
@@ -266,9 +301,9 @@
 
     function poll() {
       if (document.hidden) return;
-      fetch(base + '/stats', { cache: 'no-store' })
-        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-        .then(render)
+      // once the Worker has answered, keep its numbers on screen rather than fall back to the older snapshot
+      load(base, live ? '' : snapshot, '/stats', TIMEOUT_MS)
+        .then(function (res) { live = live || !res.cached; render(res.data, res.cached); })
         .catch(function () {
           el.classList.remove('is-live');
           q('status').textContent = 'Offline';
@@ -284,9 +319,8 @@
     function loadDaily() {
       loading = true;
       if (!daily) panel.textContent = 'Loading daily usage…';
-      fetch(base + '/daily', { cache: 'no-store' })
-        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-        .then(function (d) { daily = d; dailyAt = Date.now(); renderDaily(panel, d); })
+      load(base, snapshot, '/daily', TIMEOUT_MS)
+        .then(function (res) { daily = res.data; dailyAt = Date.now(); renderDaily(panel, res.data); })
         .catch(function () { if (!daily) panel.textContent = 'Daily usage is unavailable right now. Close and open to try again.'; })
         .then(function () { loading = false; });
     }
@@ -310,6 +344,6 @@
     formatFull: formatFull, formatCompact: formatCompact, ago: ago, status: status,
     sourceParts: sourceParts, sinceText: sinceText, formatDay: formatDay,
     heatThresholds: heatThresholds, heatLevel: heatLevel, calendar: calendar, dailySummary: dailySummary,
-    mount: mount,
+    getJSON: getJSON, load: load, mount: mount,
   };
 });
