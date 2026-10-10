@@ -1,0 +1,44 @@
+# Copies the token counter Worker's public /stats and /daily to the `data` branch every 30 minutes.
+# token-counter.js falls back to them (via raw.githubusercontent.com) when the Worker can't be reached:
+# Spanish ISPs block Cloudflare IPs during LaLiga matches, GitHub's CDN isn't affected.
+# The branch holds a single commit, replaced on every run, so main's history stays clean.
+name: Counter snapshot
+
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: counter-snapshot
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      WORKER: https://claude-token-counter.poyraz-fad.workers.dev
+    steps:
+      - name: Fetch and check
+        run: |
+          mkdir out
+          curl -fsS --retry 3 --max-time 20 "$WORKER/stats" -o out/stats.json
+          curl -fsS --retry 3 --max-time 20 "$WORKER/daily" -o out/daily.json
+          # a broken answer must not replace the last good snapshot
+          jq -e '.total.all | numbers' out/stats.json
+          jq -e '.today | strings' out/daily.json
+          jq -e '.days | arrays | length' out/daily.json
+
+      - name: Publish to the data branch
+        working-directory: out
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          git init -q -b data
+          git add stats.json daily.json
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+            commit -qm 'chore(data): counter snapshot'
+          git push -qf "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" data
