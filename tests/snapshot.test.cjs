@@ -62,11 +62,90 @@ test('without a snapshot, or when it fails too, the load is rejected', async () 
   await assert.rejects(counter.load(WORKER, SNAPSHOT, '/stats', 50));
 });
 
-test('cached numbers say so, with the age of the last update', () => {
-  const now = Date.UTC(2026, 9, 10, 18, 0);
-  const stats = { updatedAt: now - 2 * 3600 * 1000, now };
-  assert.deepEqual(counter.status(stats, true), { live: false, text: 'Cached · 2 h ago' });
-  assert.deepEqual(counter.status({ updatedAt: now - 60000, now }, true), { live: false, text: 'Cached · 1 min ago' },
-    'a fresh snapshot is still not live');
-  assert.deepEqual(counter.status(stats), { live: false, text: 'Updated 2 h ago' }, 'live data reads as before');
+test('cached numbers show how old the copy is, on this browser\'s clock', () => {
+  const clock = Date.UTC(2026, 9, 11, 15, 3);
+  // the Mac last reported 14 h ago (idle overnight) but the copy is 3 min old: "Cached · 14 h ago" read as broken
+  const stats = { updatedAt: clock - 14 * 3600e3, now: clock - 3 * 60e3 };
+  assert.deepEqual(counter.status(stats, true, clock), { live: false, text: 'Cached · 3 min ago' });
+  assert.deepEqual(counter.status({ updatedAt: clock - 2 * 3600e3, now: clock }), { live: false, text: 'Updated 2 h ago' },
+    'live data reads as before');
+});
+
+test('a copy replaces the numbers on screen only if it is at least as new', () => {
+  const shown = { updatedAt: 1000, now: 5000 };
+  assert.equal(counter.fresher(null, shown), true);
+  assert.equal(counter.fresher(shown, { updatedAt: 2000, now: 2000 }), true, 'newer data');
+  assert.equal(counter.fresher(shown, { updatedAt: 1000, now: 6000 }), true, 'same data, seen later');
+  assert.equal(counter.fresher(shown, { updatedAt: 1000, now: 4000 }), false, 'same data, seen earlier');
+  assert.equal(counter.fresher(shown, { updatedAt: 500, now: 9000 }), false, 'older data');
+});
+
+// ── mount() against a minimal DOM: just what the counter touches.
+function fakeDom() {
+  const nodes = {};
+  const node = (name) => nodes[name] || (nodes[name] = {
+    textContent: '', hidden: false, attrs: {}, classes: new Set(),
+    classList: {
+      add(c) { node(name).classes.add(c); },
+      remove(c) { node(name).classes.delete(c); },
+      toggle(c, on) { if (on) node(name).classes.add(c); else node(name).classes.delete(c); },
+    },
+    getAttribute(a) { return a in this.attrs ? this.attrs[a] : null; },
+    setAttribute(a, v) { this.attrs[a] = v; },
+    appendChild(child) { this.textContent += child.textContent; },
+    addEventListener() {},
+    querySelector(sel) { return node(/^\[data-([\w-]+)\]$/.exec(sel)[1]); },
+  });
+  const root = node('root');
+  root.attrs['data-endpoint'] = WORKER;
+  root.attrs['data-snapshot'] = SNAPSHOT;
+  const ticks = [];
+  const saved = { document: global.document, window: global.window, setInterval: global.setInterval };
+  global.document = {
+    hidden: false, addEventListener() {}, querySelector: () => null,
+    createElement: () => ({ textContent: '' }), createTextNode: (t) => ({ textContent: t }),
+  };
+  global.window = { fetch: () => {}, matchMedia: () => ({ matches: true }) }; // reduced motion: numbers set at once
+  global.setInterval = (fn) => { ticks.push(fn); };
+  afterEach(() => Object.assign(global, saved));
+  return { root, node, tick: () => ticks.forEach((fn) => fn()) };
+}
+
+const settle = () => new Promise((r) => setTimeout(r, 10));
+
+function stats(all, at) {
+  return { total: { all, cache_read: 0, output: 0 }, today: { all: 0 }, sources: {}, since: '2026-04-13',
+    updatedAt: at, lastUsageAt: at, now: at };
+}
+
+test('when the Worker drops out after answering, a newer snapshot takes over', async () => {
+  const T = Date.UTC(2026, 9, 11, 13, 59);
+  stubFetch({ [WORKER + '/stats']: stats(10, T) });
+  const dom = fakeDom();
+  counter.mount(dom.root);
+  await settle();
+  assert.equal(dom.node('total').textContent, '10');
+  assert.equal(dom.node('status').textContent, 'Live');
+
+  // the block starts; the Mac keeps copying the Worker to the snapshot
+  stubFetch({ [SNAPSHOT + '/stats.json']: stats(20, T + 60000) });
+  dom.tick();
+  await settle();
+  assert.equal(dom.node('total').textContent, '20');
+  assert.match(dom.node('status').textContent, /^Cached · /);
+});
+
+test('a snapshot older than the numbers on screen does not take them back', async () => {
+  const T = Date.UTC(2026, 9, 11, 13, 59);
+  stubFetch({ [WORKER + '/stats']: stats(20, T) });
+  const dom = fakeDom();
+  counter.mount(dom.root);
+  await settle();
+
+  stubFetch({ [SNAPSHOT + '/stats.json']: stats(10, T - 60000) });
+  dom.tick();
+  await settle();
+  assert.equal(dom.node('total').textContent, '20');
+  assert.match(dom.node('status').textContent, /^Cached · /, 'no longer live');
+  assert.equal(dom.root.classes.has('is-live'), false);
 });

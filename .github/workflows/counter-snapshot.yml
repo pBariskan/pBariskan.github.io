@@ -1,6 +1,8 @@
 # Copies the token counter Worker's public /stats and /daily to the `data` branch every 30 minutes.
 # token-counter.js falls back to them (via raw.githubusercontent.com) when the Worker can't be reached:
 # Spanish ISPs block Cloudflare IPs during LaLiga matches, GitHub's CDN isn't affected.
+# The Mac's collector writes the same files every minute while blocked; this run is the backup for when the
+# Mac is off (GitHub often skips scheduled runs, so it can't be the main source).
 # The branch holds a single commit, replaced on every run, so main's history stays clean.
 name: Counter snapshot
 

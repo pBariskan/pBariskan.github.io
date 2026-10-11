@@ -1,7 +1,8 @@
 /* Live token counter (Claude + Codex) — polls public totals from the counter Worker and animates the number.
    Also shows the GitHub contribution total the Worker relays, and a GitHub-style daily heatmap on demand.
-   If the Worker can't be reached it shows the snapshot a GitHub Action copies off it every 30 minutes
-   (.github/workflows/counter-snapshot.yml): Spanish ISPs block Cloudflare IPs during LaLiga matches. */
+   If the Worker can't be reached it shows the snapshot on the `data` branch: Spanish ISPs block Cloudflare IPs during
+   LaLiga matches. The Mac's collector copies the Worker there every minute while blocked (every 10 min otherwise),
+   a GitHub Action every 30 min as a backup (.github/workflows/counter-snapshot.yml). */
 (function (factory) {
   var api = factory();
   if (typeof module === 'object' && module.exports) module.exports = api;
@@ -30,9 +31,10 @@
     return Math.floor(h / 24) + ' d ago';
   }
 
-  function status(stats, cached) {
+  // A snapshot's `now` is when it was copied off the Worker; clock is this browser's time then.
+  function status(stats, cached, clock) {
     if (!stats.updatedAt) return { live: false, text: 'Waiting for data' };
-    if (cached) return { live: false, text: 'Cached · ' + ago(stats.updatedAt, stats.now) };
+    if (cached) return { live: false, text: 'Cached · ' + ago(stats.now, clock) };
     if (stats.now - stats.updatedAt <= LIVE_MS) return { live: true, text: 'Live' };
     return { live: false, text: 'Updated ' + ago(stats.updatedAt, stats.now) };
   }
@@ -256,11 +258,18 @@
     });
   }
 
+  // Whether stats b should replace a on screen: newer data, or the same data seen later (both on the Worker's clock).
+  function fresher(a, b) {
+    if (!a) return true;
+    var au = a.updatedAt || 0, bu = b.updatedAt || 0;
+    return bu > au || (bu === au && b.now >= a.now);
+  }
+
   function mount(el) {
     if (!el || !window.fetch) return;
     var base = el.getAttribute('data-endpoint').replace(/\/$/, '');
     var snapshot = (el.getAttribute('data-snapshot') || '').replace(/\/$/, '');
-    var live = false;
+    var shown = null;
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function q(name) { return el.querySelector('[data-' + name + ']'); }
     var tween = counterTween(q('total'), reduce);
@@ -277,10 +286,10 @@
     }
 
     function render(s, cached) {
-      if (cached) s.now = Date.now(); // the snapshot's own clock is up to 30 min old
+      var clock = cached ? Date.now() : s.now; // a snapshot's own clock stopped when it was copied
       tween(s.total.all);
       q('today').textContent = formatCompact(s.today.all);
-      q('last-burn').textContent = ago(s.lastUsageAt, s.now);
+      q('last-burn').textContent = ago(s.lastUsageAt, clock);
       q('cache-read').textContent = formatCompact(s.total.cache_read);
       q('output').textContent = formatCompact(s.total.output);
       var sources = q('sources');
@@ -292,7 +301,7 @@
         sources.appendChild(span);
       });
       q('since').textContent = sinceText(s.since);
-      var st = status(s, cached);
+      var st = status(s, cached, clock);
       el.classList.toggle('is-live', st.live);
       el.classList.remove('is-loading');
       q('status').textContent = st.text;
@@ -301,9 +310,13 @@
 
     function poll() {
       if (document.hidden) return;
-      // once the Worker has answered, keep its numbers on screen rather than fall back to the older snapshot
-      load(base, live ? '' : snapshot, '/stats', TIMEOUT_MS)
-        .then(function (res) { live = live || !res.cached; render(res.data, res.cached); })
+      load(base, snapshot, '/stats', TIMEOUT_MS)
+        .then(function (res) {
+          // the Worker may have answered just before it dropped out: keep its numbers until the copy catches up
+          if (res.cached && !fresher(shown, res.data)) res = { data: shown, cached: true };
+          shown = res.data;
+          render(res.data, res.cached);
+        })
         .catch(function () {
           el.classList.remove('is-live');
           q('status').textContent = 'Offline';
@@ -344,6 +357,6 @@
     formatFull: formatFull, formatCompact: formatCompact, ago: ago, status: status,
     sourceParts: sourceParts, sinceText: sinceText, formatDay: formatDay,
     heatThresholds: heatThresholds, heatLevel: heatLevel, calendar: calendar, dailySummary: dailySummary,
-    getJSON: getJSON, load: load, mount: mount,
+    getJSON: getJSON, load: load, fresher: fresher, mount: mount,
   };
 });
