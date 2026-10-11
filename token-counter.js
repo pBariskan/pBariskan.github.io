@@ -9,6 +9,7 @@
   else api.mount(document.querySelector('[data-token-counter]'));
 })(function () {
   var LIVE_MS = 7 * 60 * 1000;
+  var COPY_DELAY_MS = 5 * 60 * 1000; // GitHub's CDN serves a snapshot up to 5 min after the Mac wrote it
   var POLL_MS = 15000;
   var TIMEOUT_MS = 5000;
   var DAILY_MAX_AGE = 5 * 60 * 1000;
@@ -31,12 +32,13 @@
     return Math.floor(h / 24) + ' d ago';
   }
 
-  // A snapshot's `now` is when it was copied off the Worker; clock is this browser's time then.
+  // Live while the Mac is reporting, whichever way the numbers came. A snapshot's own clock stopped when it was
+  // copied, so it is measured against this browser's clock instead, with slack for GitHub's CDN.
   function status(stats, cached, clock) {
     if (!stats.updatedAt) return { live: false, text: 'Waiting for data' };
-    if (cached) return { live: false, text: 'Cached · ' + ago(stats.now, clock) };
-    if (stats.now - stats.updatedAt <= LIVE_MS) return { live: true, text: 'Live' };
-    return { live: false, text: 'Updated ' + ago(stats.updatedAt, stats.now) };
+    var t = cached ? clock : stats.now;
+    if (t - stats.updatedAt <= LIVE_MS + (cached ? COPY_DELAY_MS : 0)) return { live: true, text: 'Live' };
+    return { live: false, text: 'Updated ' + ago(stats.updatedAt, t) };
   }
 
   var SOURCE_LABELS = [['app', 'App'], ['cli', 'CLI'], ['web', 'Web'], ['codex', 'Codex']];

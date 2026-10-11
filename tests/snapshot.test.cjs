@@ -62,13 +62,22 @@ test('without a snapshot, or when it fails too, the load is rejected', async () 
   await assert.rejects(counter.load(WORKER, SNAPSHOT, '/stats', 50));
 });
 
-test('cached numbers show how old the copy is, on this browser\'s clock', () => {
-  const clock = Date.UTC(2026, 9, 11, 15, 3);
-  // the Mac last reported 14 h ago (idle overnight) but the copy is 3 min old: "Cached · 14 h ago" read as broken
-  const stats = { updatedAt: clock - 14 * 3600e3, now: clock - 3 * 60e3 };
-  assert.deepEqual(counter.status(stats, true, clock), { live: false, text: 'Cached · 3 min ago' });
-  assert.deepEqual(counter.status({ updatedAt: clock - 2 * 3600e3, now: clock }), { live: false, text: 'Updated 2 h ago' },
-    'live data reads as before');
+test('a copy reads Live while the Mac is reporting, like the Worker does', () => {
+  const clock = Date.UTC(2026, 9, 11, 15, 53);
+  // the screenshot that said "Cached · 1 min ago": the Mac reported a minute ago, the copy is a minute old
+  assert.deepEqual(counter.status({ updatedAt: clock - 60e3, now: clock - 60e3 }, true, clock), { live: true, text: 'Live' });
+  // idle Mac (5-min heartbeat) + a copy GitHub's CDN held for 5 min: still live
+  assert.deepEqual(counter.status({ updatedAt: clock - 11 * 60e3, now: clock - 5 * 60e3 }, true, clock),
+    { live: true, text: 'Live' });
+});
+
+test('once the Mac stops reporting, either source says when it last did', () => {
+  const clock = Date.UTC(2026, 9, 11, 15, 53);
+  assert.deepEqual(counter.status({ updatedAt: clock - 14 * 3600e3, now: clock - 3 * 60e3 }, true, clock),
+    { live: false, text: 'Updated 14 h ago' });
+  assert.deepEqual(counter.status({ updatedAt: clock - 2 * 3600e3, now: clock }), { live: false, text: 'Updated 2 h ago' });
+  assert.deepEqual(counter.status({ updatedAt: clock - 8 * 60e3, now: clock }), { live: false, text: 'Updated 8 min ago' },
+    'the Worker gets no extra slack');
 });
 
 test('a copy replaces the numbers on screen only if it is at least as new', () => {
@@ -119,7 +128,7 @@ function stats(all, at) {
 }
 
 test('when the Worker drops out after answering, a newer snapshot takes over', async () => {
-  const T = Date.UTC(2026, 9, 11, 13, 59);
+  const T = Date.now() - 120000;
   stubFetch({ [WORKER + '/stats']: stats(10, T) });
   const dom = fakeDom();
   counter.mount(dom.root);
@@ -132,11 +141,12 @@ test('when the Worker drops out after answering, a newer snapshot takes over', a
   dom.tick();
   await settle();
   assert.equal(dom.node('total').textContent, '20');
-  assert.match(dom.node('status').textContent, /^Cached · /);
+  assert.equal(dom.node('status').textContent, 'Live', 'the Mac is still reporting');
+  assert.equal(dom.root.classes.has('is-live'), true);
 });
 
 test('a snapshot older than the numbers on screen does not take them back', async () => {
-  const T = Date.UTC(2026, 9, 11, 13, 59);
+  const T = Date.now() - 60000;
   stubFetch({ [WORKER + '/stats']: stats(20, T) });
   const dom = fakeDom();
   counter.mount(dom.root);
@@ -146,6 +156,4 @@ test('a snapshot older than the numbers on screen does not take them back', asyn
   dom.tick();
   await settle();
   assert.equal(dom.node('total').textContent, '20');
-  assert.match(dom.node('status').textContent, /^Cached · /, 'no longer live');
-  assert.equal(dom.root.classes.has('is-live'), false);
 });
