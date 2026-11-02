@@ -36,7 +36,7 @@
 .accent-viesly    { --accent: #f5a400; --accent-ink: #3a2700; }
 .accent-huewash   { --accent: #1fa89a; --accent-ink: #053028; }
 .accent-brandai   { --accent: #7c3aed; --accent-ink: #ffffff; }
-.accent-flychimp  { --accent: #3047de; --accent-ink: #ffffff; }
+.accent-flychimp  { --accent: #ab3975; --accent-ink: #ffffff; }
 
 /* ── Reset ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; }
@@ -706,62 +706,8 @@ a   { color: inherit; }
 .media-board { background: color-mix(in srgb, var(--accent) 18%, var(--paper-2)); }
 .media-board img { width: 100%; height: 100%; object-fit: contain; padding: 18px 24px; }
 
-/* Flychimp: its tagline over the 0–1000 m flight meter, in the game's blue */
-.media-flychimp {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 12px;
-  padding: 40px clamp(18px, 2.4vw, 26px) clamp(16px, 2vw, 22px);
-  background: var(--accent);
-  color: var(--accent-ink);
-  text-decoration: none;
-}
-.media-flychimp > span { flex-shrink: 0; }
-.fc-line {
-  max-width: 12ch;
-  font-family: var(--display);
-  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
-  font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-}
-.fc-track {
-  position: relative;
-  height: 14px;
-  border: 2px solid var(--ink);
-  background: #fff;
-}
-.fc-fill {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 62%;
-  background: #ffd23f;
-  border-right: 2px solid var(--ink);
-  transition: width 0.6s cubic-bezier(0.16,1,0.3,1);
-}
-.work-card:hover .fc-fill { width: 88%; }
-.fc-flag {
-  position: absolute;
-  right: 6px; bottom: 100%;
-  width: 2px; height: 22px;
-  background: var(--ink);
-}
-.fc-flag::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 2px;
-  width: 14px; height: 10px;
-  background: #e5383b;
-  border: 2px solid var(--ink);
-}
-.fc-scale {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  font-weight: 600;
-}
+/* Flychimp: keep the catapult and the flight in view, not the corner of the page */
+.media-flychimp img { object-position: 50% 50%; }
 
 /* Brand AI: the product's own line and modules, in its purple */
 .media-brandai {
@@ -952,8 +898,7 @@ a   { color: inherit; }
   .media-board img { padding: 0; object-fit: cover; }
   .media-shot img { object-position: 88% 50%; }
   .work-wide .work-media { border-bottom: none; }
-  .media-flychimp { padding: 12px 10px; gap: 8px; justify-content: center; }
-  .fc-line, .fc-scale { display: none; }
+  .media-flychimp img { object-position: 50% 50%; }
   .work-info { padding: 14px 14px 16px; }
   .work-title, .work-feature .work-title { font-size: 1.5rem; margin-bottom: 8px; }
   .work-desc { font-size: 0.88rem; line-height: 1.5; }
