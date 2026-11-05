@@ -37,6 +37,7 @@
 .accent-huewash   { --accent: #1fa89a; --accent-ink: #053028; }
 .accent-brandai   { --accent: #7c3aed; --accent-ink: #ffffff; }
 .accent-flychimp  { --accent: #ab3975; --accent-ink: #ffffff; }
+.accent-raft      { --accent: #d4452b; --accent-ink: #ffffff; }
 
 /* ── Reset ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; }
@@ -621,7 +622,7 @@ a   { color: inherit; }
 }
 
 /* ── Work grid (projects) ───────────────────────────────── */
-/* Compact on purpose: on desktop all six projects fit in about one and a half screens. */
+/* Compact on purpose: on desktop all seven projects fit in about one and a half screens. */
 .work {
   width: min(var(--maxw), 100% - var(--gut) * 2);
   margin: 0 auto clamp(60px, 9vw, 120px);
@@ -647,6 +648,9 @@ a   { color: inherit; }
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
+
+/* two cards sharing a row */
+.work-half { grid-column: span 3; }
 
 /* a card left alone on the last row spans it, media beside the text like the feature card */
 .work-wide {
@@ -705,6 +709,10 @@ a   { color: inherit; }
 
 .media-board { background: color-mix(in srgb, var(--accent) 18%, var(--paper-2)); }
 .media-board img { width: 100%; height: 100%; object-fit: contain; padding: 18px 24px; }
+
+/* Raft: the five logs, not the corner of the sea */
+.media-raft { background: #1f5b60; }
+.media-raft img { object-position: 50% 50%; }
 
 /* Flychimp: keep the catapult and the flight in view, not the corner of the page */
 .media-flychimp img { object-position: 50% 50%; }
@@ -877,7 +885,7 @@ a   { color: inherit; }
 /* ── Responsive ─────────────────────────────────────────── */
 @media (max-width: 980px) {
   .work { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .work-card { grid-column: span 1; }
+  .work-card, .work-half { grid-column: span 1; }
   .work-feature { grid-column: 1 / -1; }
   .work-wide { grid-column: 1 / -1; }
 }
@@ -899,6 +907,7 @@ a   { color: inherit; }
   .media-shot img { object-position: 88% 50%; }
   .work-wide .work-media { border-bottom: none; }
   .media-flychimp img { object-position: 50% 50%; }
+  .media-raft img { object-position: 12% 50%; }
   .work-info { padding: 14px 14px 16px; }
   .work-title, .work-feature .work-title { font-size: 1.5rem; margin-bottom: 8px; }
   .work-desc { font-size: 0.88rem; line-height: 1.5; }
