@@ -54,3 +54,11 @@ test('days read as short dates', () => {
   assert.equal(counter.formatDay('2026-10-04'), 'Oct 4, 2026');
   assert.equal(counter.formatDay('2026-10-04', false), 'Oct 4');
 });
+
+test('sources list in a fixed order, skip empty ones and include OpenCode', () => {
+  assert.deepEqual(
+    counter.sourceParts({ app: 0, cli: 2500000, web: 0, codex: 1200, opencode: 3660000 }),
+    ['CLI 2.5M', 'Codex 1.2K', 'OpenCode 3.7M'],
+  );
+  assert.deepEqual(counter.sourceParts({ cli: 5 }), ['CLI 5'], 'an older Worker without opencode still renders');
+});
