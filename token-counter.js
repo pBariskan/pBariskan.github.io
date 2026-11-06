@@ -1,4 +1,4 @@
-/* Live token counter (Claude + Codex) — polls public totals from the counter Worker and animates the number.
+/* Live token counter (Claude + Codex + OpenCode) — polls public totals from the counter Worker and animates the number.
    Also shows the GitHub contribution total the Worker relays, and a GitHub-style daily heatmap on demand.
    If the Worker can't be reached it shows the snapshot on the `data` branch: Spanish ISPs block Cloudflare IPs during
    LaLiga matches. The Mac's collector copies the Worker there every minute while blocked (every 10 min otherwise),
@@ -41,7 +41,7 @@
     return { live: false, text: 'Updated ' + ago(stats.updatedAt, t) };
   }
 
-  var SOURCE_LABELS = [['app', 'App'], ['cli', 'CLI'], ['web', 'Web'], ['codex', 'Codex']];
+  var SOURCE_LABELS = [['app', 'App'], ['cli', 'CLI'], ['web', 'Web'], ['codex', 'Codex'], ['opencode', 'OpenCode']];
 
   function sourceParts(sources) {
     return SOURCE_LABELS
